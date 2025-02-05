@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Deepak Kadian",
+  title: "Deepak",
   description: "Portfolio website for deepak kadian.",
 };
 
