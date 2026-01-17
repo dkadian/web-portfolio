@@ -20,12 +20,12 @@ const educationData = {
   tenth: {
     percentage: 84,
     school: "Krishna Model Secondary School",
-    year: "2019",
+    year: "2020",
   },
   twelfth: {
     percentage: 80,
     school: "GBSSS, Dharampura",
-    year: "2021",
+    year: "2022",
   },
 };
 
