@@ -13,6 +13,19 @@ const HomePage = () => {
   const deletingSpeed = 50;
   const pauseTime = 2000;
 
+  // Second typing effect for roles
+  const [roleText, setRoleText] = useState("");
+  const roles = [
+    "B.Tech Computer Science Student",
+    "Data Analyst",
+    "Machine Learning Engineer",
+    "Python Developer",
+    "Tech Enthusiast",
+  ];
+  const roleTypingSpeed = 80;
+  const roleDeletingSpeed = 40;
+  const rolePauseTime = 2500;
+
   useEffect(() => {
     let currentIndex = 0;
     let isDeleting = false;
@@ -41,6 +54,42 @@ const HomePage = () => {
     };
 
     timeoutId = setTimeout(type, typingSpeed);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  useEffect(() => {
+    let currentRoleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let timeoutId: NodeJS.Timeout;
+
+    const typeRole = () => {
+      const currentRole = roles[currentRoleIndex];
+      
+      if (!isDeleting) {
+        if (charIndex < currentRole.length) {
+          setRoleText(currentRole.substring(0, charIndex + 1));
+          charIndex++;
+          timeoutId = setTimeout(typeRole, roleTypingSpeed);
+        } else {
+          isDeleting = true;
+          timeoutId = setTimeout(typeRole, rolePauseTime);
+        }
+      } else {
+        if (charIndex > 0) {
+          charIndex--;
+          setRoleText(currentRole.substring(0, charIndex));
+          timeoutId = setTimeout(typeRole, roleDeletingSpeed);
+        } else {
+          isDeleting = false;
+          currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+          timeoutId = setTimeout(typeRole, roleTypingSpeed);
+        }
+      }
+    };
+
+    timeoutId = setTimeout(typeRole, 500);
 
     return () => clearTimeout(timeoutId);
   }, []);
@@ -77,8 +126,10 @@ const HomePage = () => {
                 <span className="cursor-blink inline-block w-1 h-10 bg-purple-500 ml-1 align-middle"></span>
               </h1>
               <p className="text-xl lg:text-2xl text-gray-400 mb-8 max-w-2xl animate-fadeIn stagger-2">
-                I am a B.Tech Computer Science and Engineering student with a strong passion for technology and innovation. With a lifelong interest in tech, I am driven by how software and emerging technologies shape the world.
-
+                I am a <span className="text-purple-400 font-semibold">{roleText}</span>
+                <span className="cursor-blink inline-block w-1 h-6 bg-purple-500 ml-1 align-middle"></span>
+                <br /><br />
+                With a strong passion for technology and innovation, I am driven by how software and emerging technologies shape the world.
               </p>
               <div className="flex flex-wrap gap-4 justify-center lg:justify-start animate-fadeIn stagger-3">
                 <Link

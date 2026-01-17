@@ -39,7 +39,13 @@ const skillsData: Record<string, Skill[]> = {
     { name: "Docker", icon: "🐳", color: "hover:bg-blue-500/20" },
     { name: "VS Code", icon: "⌨️", color: "hover:bg-blue-500/20" },
   ],
+  "Visualisation Tools": [
+    {name: "Excel", icon: "📊",color: "hover:bg-orange-500/20"},
+    {name: "Power Bi", icon: "📶",color: "hover:bg-orange-500/20"},
+  ]
+
 };
+
 
 const SkillsPage = () => {
   const categories = Object.entries(skillsData);
@@ -66,7 +72,8 @@ const SkillsPage = () => {
                     {index === 0 ? '🎨' : 
                      index === 1 ? '⚙️' : 
                      index === 2 ? '🐍' : 
-                     index === 3 ? '🗄️' : '🔧'}
+                     index === 3 ? '🗄️' :
+                     index === 4 ?  '🔧' : '📈'}
                   </span>
                   </div>
                   <h3 className="text-xl font-semibold text-purple-400 group-hover:text-purple-300 transition-colors duration-300">
