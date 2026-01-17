@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "moduleResolution": "bundler",
-    "ignoreDeprecations": "5.0",
     "esModuleInterop": true,
     "target": "ES2017",
     "lib": [
@@ -34,4 +33,3 @@
     "node_modules"
   ]
 }
-
