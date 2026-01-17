@@ -33,34 +33,34 @@ const ProjectsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-900/50 via-[#0a0a1e] to-[#0a0a1e] text-white pt-16">
       {/* Projects Section */}
-      <section className="min-h-screen flex items-center py-20">
+      <section className="min-h-screen flex items-center py-12 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-12 text-center animate-fadeIn">
+          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 lg:mb-12 text-center animate-fadeIn">
             Projects
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2 transition-all duration-500 animate-fadeIn"
+                className="group bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2 transition-all duration-500 animate-fadeIn"
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-2xl font-semibold text-white group-hover:text-purple-300 transition-colors duration-300">
+                <div className="flex items-start justify-between mb-3 lg:mb-4">
+                  <h3 className="text-xl lg:text-2xl font-semibold text-white group-hover:text-purple-300 transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <span className="text-2xl opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-300">
+                  <span className="text-xl lg:text-2xl opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-300">
                     🚀
                   </span>
                 </div>
-                <p className="text-gray-400 mb-6 group-hover:text-gray-300 transition-colors duration-300">
+                <p className="text-sm lg:text-base text-gray-400 mb-4 lg:mb-6 group-hover:text-gray-300 transition-colors duration-300">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-4 lg:mb-6">
                   {project.tech.map((tech, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full group-hover:bg-purple-500/40 transition-all duration-300"
+                      className="px-2.5 lg:px-3 py-1 text-xs lg:text-sm bg-purple-500/20 text-purple-300 rounded-full group-hover:bg-purple-500/40 transition-all duration-300"
                     >
                       {tech}
                     </span>
@@ -68,10 +68,10 @@ const ProjectsPage = () => {
                 </div>
                 <a
                   href={project.link}
-                  className="inline-flex items-center text-white group-hover:text-purple-300 group-hover:translate-x-2 transition-all duration-300"
+                  className="inline-flex items-center text-sm lg:text-base text-white group-hover:text-purple-300 group-hover:translate-x-2 transition-all duration-300"
                 >
                   <span>View Project</span>
-                  <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  <span className="ml-1.5 lg:ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
                 </a>
               </div>
             ))}

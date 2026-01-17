@@ -53,22 +53,22 @@ const SkillsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-900/50 via-[#0a0a1e] to-[#0a0a1e] text-white pt-16">
       {/* Skills Section */}
-      <section className="min-h-screen flex items-center py-20">
+      <section className="min-h-screen flex items-center py-12 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-12 text-center animate-fadeIn">
+          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 lg:mb-12 text-center animate-fadeIn">
             Skills
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {categories.map(([category, skillList], index) => (
               <div
                 key={index}
-                className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2 transition-all duration-500 animate-fadeIn h-full flex flex-col"
+                className="group bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2 transition-all duration-500 animate-fadeIn h-full flex flex-col"
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
                 {/* Category Header */}
-                <div className="flex items-center gap-3 mb-6 flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center group-hover:from-purple-500/50 group-hover:to-pink-500/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
-                  <span className="text-2xl">
+                <div className="flex items-center gap-3 mb-4 lg:mb-6 flex-shrink-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center group-hover:from-purple-500/50 group-hover:to-pink-500/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <span className="text-xl sm:text-2xl">
                     {index === 0 ? '🎨' : 
                      index === 1 ? '⚙️' : 
                      index === 2 ? '🐍' : 
@@ -76,25 +76,25 @@ const SkillsPage = () => {
                      index === 4 ?  '🔧' : '📈'}
                   </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-purple-400 group-hover:text-purple-300 transition-colors duration-300">
+                  <h3 className="text-lg sm:text-xl font-semibold text-purple-400 group-hover:text-purple-300 transition-colors duration-300">
                     {category}
                   </h3>
                 </div>
                 
                 {/* Skills List */}
-                <ul className="space-y-3 flex-grow">
+                <ul className="space-y-2 lg:space-y-3 flex-grow">
                   {skillList.map((skill, i) => (
                     <li key={i}>
                       <div
-                        className={`flex items-center gap-3 p-3 rounded-xl ${skill.color} hover:scale-105 hover:translate-x-1 transition-all duration-300 cursor-default`}
+                        className={`flex items-center gap-2 lg:gap-3 p-2 lg:p-3 rounded-xl ${skill.color} hover:scale-105 hover:translate-x-1 transition-all duration-300 cursor-default`}
                         style={{ animationDelay: `${index * 0.1 + i * 0.05}s` }}
                       >
                         {/* Skill Icon */}
-                        <span className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-lg text-xl group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
+                        <span className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center bg-white/10 rounded-lg text-lg lg:text-xl group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
                           {skill.icon}
                         </span>
                         {/* Skill Name */}
-                        <span className="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">
+                        <span className="text-sm lg:text-base text-gray-300 font-medium group-hover:text-white transition-colors duration-300">
                           {skill.name}
                         </span>
                         {/* Arrow Indicator */}

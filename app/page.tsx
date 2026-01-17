@@ -99,12 +99,12 @@ const HomePage = () => {
 
       {/* Home Section */}
       <section className="min-h-screen flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             {/* Profile Photo with floating animation */}
-            <div className="flex-shrink-0 animate-float">
-              <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl hover:border-purple-500/50 transition-all duration-500">
-                <div className="relative w-48 h-48 lg:w-60 lg:h-60 rounded-full overflow-hidden shadow-lg animate-scaleIn">
+            <div className="flex-shrink-0 animate-float order-1 lg:order-1">
+              <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-80 lg:h-80 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl hover:border-purple-500/50 transition-all duration-500">
+                <div className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-60 lg:h-60 rounded-full overflow-hidden shadow-lg animate-scaleIn">
                   <Image
                     src={profileImage}
                     alt="Deepak - Profile Photo"
@@ -117,30 +117,31 @@ const HomePage = () => {
             </div>
 
             {/* Name & About with staggered animations */}
-            <div className="flex-1 text-center lg:text-left">
+            <div className="flex-1 text-center lg:text-left order-2 lg:order-2">
               <h1 
-                className="text-5xl lg:text-7xl font-bold mb-6 animate-slideInLeft"
+                className="text-3xl sm:text-4xl lg:text-7xl font-bold mb-4 lg:mb-6 animate-slideInLeft"
                 style={{ minHeight: "1.2em" }}
               >
                 <span className="gradient-text">{typedText}</span>
-                <span className="cursor-blink inline-block w-1 h-10 bg-purple-500 ml-1 align-middle"></span>
+                <span className="cursor-blink inline-block w-1 h-6 sm:h-8 lg:h-10 bg-purple-500 ml-1 align-middle"></span>
               </h1>
-              <p className="text-xl lg:text-2xl text-gray-400 mb-8 max-w-2xl animate-fadeIn stagger-2">
+              <p className="text-base sm:text-lg lg:text-2xl text-gray-400 mb-6 lg:mb-8 max-w-2xl animate-fadeIn stagger-2">
                 I am a <span className="text-purple-400 font-semibold">{roleText}</span>
-                <span className="cursor-blink inline-block w-1 h-6 bg-purple-500 ml-1 align-middle"></span>
-                <br /><br />
+                <span className="cursor-blink inline-block w-1 h-4 sm:h-5 lg:h-6 bg-purple-500 ml-1 align-middle"></span>
+                <br className="lg:hidden" /><br className="lg:hidden" />
+                <span className="lg:hidden"><br /></span>
                 With a strong passion for technology and innovation, I am driven by how software and emerging technologies shape the world.
               </p>
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start animate-fadeIn stagger-3">
+              <div className="flex flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start animate-fadeIn stagger-3">
                 <Link
                   href="/projects"
-                  className="px-8 py-3 bg-white text-[#0a0a1e] font-semibold rounded-lg hover:bg-gray-200 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+                  className="px-6 lg:px-8 py-2.5 lg:py-3 bg-white text-[#0a0a1e] font-semibold rounded-lg hover:bg-gray-200 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 text-sm lg:text-base"
                 >
                   View Projects
                 </Link>
                 <Link
                   href="/contact"
-                  className="px-8 py-3 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 hover:border-purple-500/50 hover:scale-105 transition-all duration-300"
+                  className="px-6 lg:px-8 py-2.5 lg:py-3 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 hover:border-purple-500/50 hover:scale-105 transition-all duration-300 text-sm lg:text-base"
                 >
                   Contact Me
                 </Link>

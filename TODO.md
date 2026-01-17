@@ -1,26 +1,36 @@
-# TODO: Enhanced Transitions & Design - COMPLETED ✓
+# Navigation & Alignment Fixes
 
-## Phase 1: Global Styles & Utilities
-- [x] Add custom animations in globals.css (fade-in, slide-up, typing cursor, gradient text)
-- [x] Add page transition wrapper in layout.tsx with framer-motion
+## Tasks to Complete:
 
-## Phase 2: Home Page (page.tsx)
-- [x] Replace static "Deepak" with "Hello, I'm Deepak" typing animation
-- [x] Add gradient text to the name
-- [x] Add staggered entrance animations for profile image and text
-- [x] Add floating animation to profile image
+### 1. Navigation.tsx
+- [x] Add "Home" to navItems array
+- [x] Reorder navItems: Home, Projects, Skills, Education, Contact
+- [x] Adjust spacing for better alignment
+- [x] Remove social links from header (keep in footer only)
+- [x] **Enhanced mobile dropdown menu:**
+  - Better styling with rounded backgrounds
+  - Added GitHub and LinkedIn icons
+  - Improved animations
+  - Better spacing
 
-## Phase 3: Navigation (Navigation.tsx)
-- [x] Add animated underline slide for active nav items
-- [x] Add subtle scale on hover
+### 2. SocialLinks.tsx
+- [x] Keep social links - no changes needed (only in footer now)
 
-## Phase 4: Other Pages (Projects, Skills, Certificates, Contact)
-- [x] Add staggered card entrance animations
-- [x] Add hover lift + glow effects
-- [x] Add scale and border glow transitions
+### 3. Home Page (page.tsx)
+- [x] Fix flex order for profile image and text
+- [x] Improve alignment and spacing
 
-## Phase 5: Testing
-- [x] Verify all animations work smoothly
-- [x] Test responsive design
-- [x] Test page transitions between routes
+### 4. Footer.tsx
+- [x] SocialLinks already in footer only
+- [x] Proper alignment maintained
+
+## Progress:
+- [x] Analyzed all files
+- [x] Created plan
+- [x] Implemented fixes
+- [x] Navigation bar fixed with Home link
+- [x] Removed duplicate SocialLinks from header
+- [x] Spacing improved with gap-8 instead of space-x-8
+- [x] Enhanced mobile dropdown with social icons and beautiful styling
+
 
