@@ -2,39 +2,99 @@
 
 import Footer from "../components/Footer";
 
+interface Skill {
+  name: string;
+  icon: string;
+  color: string;
+}
+
+const skillsData: Record<string, Skill[]> = {
+  Frontend: [
+    { name: "React", icon: "⚛️", color: "hover:bg-cyan-500/20" },
+    { name: "TypeScript", icon: "📘", color: "hover:bg-blue-500/20" },
+    { name: "Tailwind CSS", icon: "🎨", color: "hover:bg-cyan-400/20" },
+    { name: "HTML/CSS", icon: "🌐", color: "hover:bg-orange-500/20" },
+  ],
+  Backend: [
+    { name: "Express", icon: "🚂", color: "hover:bg-gray-400/20" },
+    { name: "Python", icon: "🐍", color: "hover:bg-yellow-500/20" },
+    { name: "Java", icon: "☕", color: "hover:bg-orange-600/20" },
+  ],
+  "Python Libraries": [
+    { name: "Pandas", icon: "🐼", color: "hover:bg-blue-500/20" },
+    { name: "NumPy", icon: "🔢", color: "hover:bg-blue-600/20" },
+    { name: "Matplotlib", icon: "📊", color: "hover:bg-orange-500/20" },
+    { name: "Seaborn", icon: "📈", color: "hover:bg-teal-500/20" },
+    { name: "Flask", icon: "🌡️", color: "hover:bg-gray-400/20" },
+    { name: "Scikit-learn", icon: "⚙️", color: "hover:bg-orange-500/20" },
+    { name: "Streamlit", icon: "🚀", color: "hover:bg-red-500/20" },
+  ],
+  Database: [
+    { name: "MongoDB", icon: "🍃", color: "hover:bg-green-600/20" },
+    { name: "PostgreSQL", icon: "🐘", color: "hover:bg-blue-600/20" },
+    { name: "MySQL", icon: "🗄️", color: "hover:bg-orange-400/20" },
+  ],
+  Tools: [
+    { name: "Git", icon: "🔀", color: "hover:bg-orange-500/20" },
+    { name: "Docker", icon: "🐳", color: "hover:bg-blue-500/20" },
+    { name: "VS Code", icon: "⌨️", color: "hover:bg-blue-500/20" },
+  ],
+};
+
 const SkillsPage = () => {
-  const skills = {
-    Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS"],
-    Backend: ["Node.js", "Express", "Python", "Java"],
-    Database: ["MongoDB", "PostgreSQL", "MySQL"],
-    Tools: ["Git", "Docker", "AWS", "VS Code"],
-  };
+  const categories = Object.entries(skillsData);
 
   return (
-<div className="min-h-screen bg-gradient-to-b from-indigo-900/50 via-[#0a0a1e] to-[#0a0a1e] text-white pt-16">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-900/50 via-[#0a0a1e] to-[#0a0a1e] text-white pt-16">
       {/* Skills Section */}
       <section className="min-h-screen flex items-center py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-12 text-center">
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-12 text-center animate-fadeIn">
             Skills
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {Object.entries(skills).map(([category, skillList], index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {categories.map(([category, skillList], index) => (
               <div
                 key={index}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6"
+                className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2 transition-all duration-500 animate-fadeIn h-full flex flex-col"
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <h3 className="text-xl font-semibold text-purple-400 mb-6">
-                  {category}
-                </h3>
-                <ul className="space-y-3">
+                {/* Category Header */}
+                <div className="flex items-center gap-3 mb-6 flex-shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center group-hover:from-purple-500/50 group-hover:to-pink-500/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <span className="text-2xl">
+                    {index === 0 ? '🎨' : 
+                     index === 1 ? '⚙️' : 
+                     index === 2 ? '🐍' : 
+                     index === 3 ? '🗄️' : '🔧'}
+                  </span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-purple-400 group-hover:text-purple-300 transition-colors duration-300">
+                    {category}
+                  </h3>
+                </div>
+                
+                {/* Skills List */}
+                <ul className="space-y-3 flex-grow">
                   {skillList.map((skill, i) => (
-                    <li
-                      key={i}
-                      className="text-gray-300 flex items-center gap-2"
-                    >
-                      <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                      {skill}
+                    <li key={i}>
+                      <div
+                        className={`flex items-center gap-3 p-3 rounded-xl ${skill.color} hover:scale-105 hover:translate-x-1 transition-all duration-300 cursor-default`}
+                        style={{ animationDelay: `${index * 0.1 + i * 0.05}s` }}
+                      >
+                        {/* Skill Icon */}
+                        <span className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-lg text-xl group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
+                          {skill.icon}
+                        </span>
+                        {/* Skill Name */}
+                        <span className="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">
+                          {skill.name}
+                        </span>
+                        {/* Arrow Indicator */}
+                        <span className="ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-purple-400">
+                          →
+                        </span>
+                      </div>
                     </li>
                   ))}
                 </ul>
