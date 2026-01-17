@@ -1,33 +1,70 @@
+"use client";
+
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Footer from "./components/Footer";
+import profileImage from "./Pictures and Certificates/profileImage.jpg";
 
-const Page = () => {
-
+const HomePage = () => {
   return (
-    <>
-      <div className="text-xl ml-9 mt-5 text-red-50 lg:text-2xl max-w-fit">
-        <h1 className="transition-all p-2 duration-300 hover:bg-rose-50 cursor-pointer rounded-xl hover:text-black text-left">D.K.</h1>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-indigo-900/50 via-[#0a0a1e] to-[#0a0a1e] text-white pt-16">
 
-      <nav className="font-semibold text-xl text-red-50 m-2 text-center">
-        <a className="font-semibold text-xl m-2 text-center cursor-pointer hover:text-black hover:bg-rose-50 ">Home</a>
-        <a className="font-semibold text-xl m-2 text-center cursor-pointer hover:text-black hover:bg-rose-50">Projects</a>
-        <a className="font-semibold text-xl m-2 text-center cursor-pointer hover:text-black hover:bg-rose-50">Education</a>
-        <a className="font-semibold text-xl m-2 text-center cursor-pointer hover:text-black hover:bg-rose-50">Certificates</a>
-        <a className="font-semibold text-xl m-2 text-center cursor-pointer hover:text-black hover:bg-rose-50">Skills</a>
-      </nav>
+      {/* Home Section */}
+      <section className="min-h-screen flex items-center justify-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Profile Photo */}
+            <div className="flex-shrink-0">
+              <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl">
+                <div className="relative w-48 h-48 lg:w-60 lg:h-60 rounded-full overflow-hidden shadow-lg">
+                  <Image
+                    src={profileImage}
+                    alt="Deepak - Profile Photo"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
 
-      <div className="text-left p-7 ml-10 mt-20 text-opacity-60 text-red-50 text-6xl">
-        Deepak
-      </div>
+            {/* Name & About */}
+            <div className="flex-1 text-center lg:text-left">
+              <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6">
+                Deepak
+              </h1>
+              <p className="text-xl lg:text-2xl text-gray-400 mb-8 max-w-2xl">
+                Hello! I am currently pursuing a B.Tech in Computer Science and
+                Engineering, driven by a deep passion for technology and
+                innovation. Growing up with a generational interest in tech, I
+                have always been fascinated by how software and emerging
+                technologies shape the world.
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                <Link
+                  href="/projects"
+                  className="px-8 py-3 bg-white text-[#0a0a1e] font-semibold rounded-lg hover:bg-gray-200 transition-colors duration-200"
+                >
+                  View Projects
+                </Link>
+                <Link
+                  href="/contact"
+                  className="px-8 py-3 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors duration-200"
+                >
+                  Contact Me
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-
-      <div className="text-xl lg:text-2xl">
-        <p className="p-10 rounded-base font-thin text-red-50 cursor-pointer">
-          Hello! I am currently pursuing a B.Tech in Computer Science and Engineering, driven by a deep passion for technology and innovation. Growing up with a generational interest in tech, I have always been fascinated by how software and emerging technologies shape the world. I enjoy exploring areas like web development, AI, and data structures, constantly looking for opportunities to learn and build impactful solutions. With a strong problem-solving mindset and a curiosity for cutting-edge advancements, I am eager to contribute to the ever-evolving tech landscape.
-        </p>
-      </div>
-    </>
+      {/* Footer */}
+      <Footer />
+    </div>
   );
 };
 
-export default Page;
+export default HomePage;
+
