@@ -116,8 +116,7 @@ const EducationPage = () => {
                 
                 <div className="flex items-center gap-3 lg:gap-4 mb-4">
                   <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                    <span className="text-2xl lg:text-3xl font-bold text-white">{educationData.tenth.percentage}</span>
-                    <span className="text-xs lg:text-sm absolute -bottom-5 lg:-bottom-6 text-gray-400">%</span>
+                    <span className="text-2xl lg:text-3xl font-bold text-white">{educationData.tenth.percentage} % </span>
                   </div>
                   <div className="flex-1">
                     <p className="text-sm lg:text-base text-gray-300 font-medium">{educationData.tenth.school}</p>
@@ -146,8 +145,7 @@ const EducationPage = () => {
                 
                 <div className="flex items-center gap-3 lg:gap-4 mb-4">
                   <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center">
-                    <span className="text-2xl lg:text-3xl font-bold text-white">{educationData.twelfth.percentage}</span>
-                    <span className="text-xs lg:text-sm absolute -bottom-5 lg:-bottom-6 text-gray-400">%</span>
+                    <span className="text-2xl lg:text-3xl font-bold text-white">{educationData.twelfth.percentage} %</span>
                   </div>
                   <div className="flex-1">
                     <p className="text-sm lg:text-base text-gray-300 font-medium">{educationData.twelfth.school}</p>
