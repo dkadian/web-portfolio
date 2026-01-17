@@ -129,7 +129,7 @@ const HomePage = () => {
                 I am a <span className="text-purple-400 font-semibold">{roleText}</span>
                 <span className="cursor-blink inline-block w-1 h-4 sm:h-5 lg:h-6 bg-purple-500 ml-1 align-middle"></span>
                 <br className="lg:hidden" /><br className="lg:hidden" />
-                <span className="lg:hidden"><br /></span>
+                <span className="lg:hidden"><br /></span> <br />
                 With a strong passion for technology and innovation, I am driven by how software and emerging technologies shape the world.
               </p>
               <div className="flex flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start animate-fadeIn stagger-3">
