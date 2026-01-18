@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases my skills, projects, education, and provides a way to connect with me.
 
-![Portfolio Preview](https://deepakkadian.vercel.app/1200x600/0a0a1e/purple?text=Deepak+Kadian+Portfolio)
+> **Note**: Your profile photo is displayed in the Home section at `app/Pictures and Certificates/profileImage.jpg`
 
 ## 🚀 Features
 
