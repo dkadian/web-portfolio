@@ -4,28 +4,28 @@ import Footer from "../components/Footer";
 
 const projects = [
   {
-    title: "Project 1",
-    description: "Description of your first project",
-    tech: ["React", "Next.js", "Tailwind"],
-    link: "#",
+    title: "web-portfolio",
+    description: "A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases my skills, projects, education, and provides a way to connect with me.",
+    tech: ["TypeScript", "CSS", "Javascript"],
+    link: "https://github.com/dkadian/web-portfolio",
   },
   {
-    title: "Project 2",
-    description: "Description of your second project",
-    tech: ["Node.js", "MongoDB", "Express"],
-    link: "#",
+    title: "Dogs_cats_recog",
+    description: "This repository implements a Support Vector Machine (SVM) classifier in Python to classify images of cats and dogs from the popular Kaggle Cats vs Dogs dataset.",
+    tech: ["Python", "Jupyter notebook", "SVM ML algorithm"],
+    link: "https://github.com/dkadian/Dogs_cats_recog",
   },
   {
-    title: "Project 3",
-    description: "Description of your third project",
-    tech: ["Python", "Django", "PostgreSQL"],
-    link: "#",
+    title: "House_pricing",
+    description: "The code aims to build and evaluate linear regression models to predict house prices (SalePrice) based on their square footage and number of bedrooms and bathrooms, using a dataset containing information about residential properties. ",
+    tech: ["Python", "Linear Regression", "Jupyter Notebook"],
+    link: "https://github.com/dkadian/House_pricing",
   },
   {
-    title: "Project 4",
-    description: "Description of your fourth project",
-    tech: ["JavaScript", "HTML", "CSS"],
-    link: "#",
+    title: "Hand_gesture_recog.",
+    description: "Hand gesture recognition is a crucial component of human-computer interaction, providing a natural way for users to communicate with machines. This project aims to build a state-of-the-art deep learning model capable of recognizing different hand gestures in real-time, making it suitable for applications like sign language interpretation, virtual reality interfaces, gaming, and smart home controls.",
+    tech: ["Python", "Juypter Notebook", "python Libraries"],
+    link: "https://github.com/dkadian/Hand_gesture_recog.",
   },
 ];
 
@@ -70,7 +70,7 @@ const ProjectsPage = () => {
                   href={project.link}
                   className="inline-flex items-center text-sm lg:text-base text-white group-hover:text-purple-300 group-hover:translate-x-2 transition-all duration-300"
                 >
-                  <span>View Project</span>
+                  <span>Source Code</span>
                   <span className="ml-1.5 lg:ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
                 </a>
               </div>
