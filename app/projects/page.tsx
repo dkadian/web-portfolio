@@ -6,7 +6,7 @@ const projects = [
   {
     title: "web-portfolio",
     description: "A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases my skills, projects, education, and provides a way to connect with me.",
-    tech: ["TypeScript", "CSS", "Javascript"],
+    tech: ["TypeScript", "tailwind CSS", "Javascript"],
     link: "https://github.com/dkadian/web-portfolio",
   },
   {
