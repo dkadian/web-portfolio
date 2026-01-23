@@ -11,7 +11,6 @@ interface Skill {
 const skillsData: Record<string, Skill[]> = {
   Frontend: [
     { name: "React", icon: "⚛️", color: "hover:bg-cyan-500/20" },
-    { name: "TypeScript", icon: "📘", color: "hover:bg-blue-500/20" },
     { name: "Tailwind CSS", icon: "🎨", color: "hover:bg-cyan-400/20" },
     { name: "HTML/CSS", icon: "🌐", color: "hover:bg-orange-500/20" },
   ],
