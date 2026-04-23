@@ -41,8 +41,8 @@ const SkillsPage = () => {
   const categories = Object.entries(skillsData);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-24 bg-dots">
-      <section className="py-12 lg:py-20">
+    <div className="min-h-screen flex flex-col bg-background text-foreground pt-24 bg-dots">
+      <section className="flex-grow py-12 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center lg:text-left">
             <h2 className="text-3xl lg:text-5xl font-bold font-mono mb-4">

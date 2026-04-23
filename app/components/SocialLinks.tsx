@@ -50,7 +50,7 @@ const SocialLinks = () => {
           href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-card border border-border rounded-lg text-muted hover:text-foreground hover:border-accent/50 hover:scale-105 transition-all duration-300 group overflow-hidden min-w-[44px] min-h-[44px]"
+          className="relative flex items-center justify-center gap-2 px-2 py-1.5 bg-card border border-border rounded-md text-muted hover:text-foreground hover:border-accent/50 hover:scale-105 transition-all duration-300 group overflow-hidden"
           aria-label={social.name}
         >
           {/* Glow effect on hover */}

@@ -23,9 +23,9 @@ const CVPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-24 bg-grid">
+    <div className="min-h-screen flex flex-col bg-background text-foreground pt-24 bg-grid">
       {/* CV Section */}
-      <section className="py-12 lg:py-20">
+      <section className="flex-grow py-12 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="mb-12 text-center lg:text-left">

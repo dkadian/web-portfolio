@@ -52,8 +52,8 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-24 pb-12 bg-grid">
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col bg-background text-foreground pt-24 bg-grid">
+      <section className="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Side: Intro & Visual */}

@@ -211,6 +211,27 @@ body {
 .terminal-body {
   padding: 20px;
   font-family: var(--font-geist-mono), monospace;
+  position: relative;
+}
+
+.terminal-body::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  z-index: 2;
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.dark .terminal-body::after {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  opacity: 1;
 }
 
 .code-keyword { color: var(--syntax-keyword); }

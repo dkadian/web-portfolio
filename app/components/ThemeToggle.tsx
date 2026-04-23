@@ -36,11 +36,6 @@ const ThemeToggle = () => {
           {isDark ? "🌙" : "☀️"}
         </span>
       </motion.div>
-
-      <div className="absolute inset-0 flex items-center justify-between px-2 font-mono text-[8px] pointer-events-none opacity-60">
-        <span className={!isDark ? "text-accent font-bold" : "text-muted"}>light</span>
-        <span className={isDark ? "text-accent font-bold" : "text-muted"}>dark</span>
-      </div>
     </button>
   );
 };
