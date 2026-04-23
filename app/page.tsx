@@ -2,63 +2,21 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Footer from "./components/Footer";
-import profileImage from "./Pictures and Certificates/profileImage.jpg";
+import ProfileImage from "./components/ProfileImage";
+import { motion } from "framer-motion";
 
 const HomePage = () => {
-  const [typedText, setTypedText] = useState("");
-  const fullText = "Hello, I'm Deepak";
-  const typingSpeed = 100;
-  const deletingSpeed = 50;
-  const pauseTime = 2000;
-
-  // Second typing effect for roles
   const [roleText, setRoleText] = useState("");
-  const roles = [
-    "B.Tech Computer Science Student",
-    "Data Analyst",
-    "Machine Learning Engineer",
-    "Python Developer",
-    "Tech Enthusiast",
-  ];
-  const roleTypingSpeed = 80;
-  const roleDeletingSpeed = 40;
-  const rolePauseTime = 2500;
-
+  
   useEffect(() => {
-    let currentIndex = 0;
-    let isDeleting = false;
-    let timeoutId: NodeJS.Timeout;
-
-    const type = () => {
-      if (!isDeleting) {
-        if (currentIndex < fullText.length) {
-          setTypedText(fullText.substring(0, currentIndex + 1));
-          currentIndex++;
-          timeoutId = setTimeout(type, typingSpeed);
-        } else {
-          isDeleting = true;
-          timeoutId = setTimeout(type, pauseTime);
-        }
-      } else {
-        if (currentIndex > 0) {
-          currentIndex--;
-          setTypedText(fullText.substring(0, currentIndex));
-          timeoutId = setTimeout(type, deletingSpeed);
-        } else {
-          isDeleting = false;
-          timeoutId = setTimeout(type, typingSpeed);
-        }
-      }
-    };
-
-    timeoutId = setTimeout(type, typingSpeed);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
-
-  useEffect(() => {
+    const roles = [
+      "B.Tech CS Student",
+      "Data Analyst",
+      "ML Engineer",
+      "Python Developer",
+      "Tech Enthusiast",
+    ];
     let currentRoleIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -71,91 +29,160 @@ const HomePage = () => {
         if (charIndex < currentRole.length) {
           setRoleText(currentRole.substring(0, charIndex + 1));
           charIndex++;
-          timeoutId = setTimeout(typeRole, roleTypingSpeed);
+          timeoutId = setTimeout(typeRole, 80);
         } else {
           isDeleting = true;
-          timeoutId = setTimeout(typeRole, rolePauseTime);
+          timeoutId = setTimeout(typeRole, 2000);
         }
       } else {
         if (charIndex > 0) {
           charIndex--;
           setRoleText(currentRole.substring(0, charIndex));
-          timeoutId = setTimeout(typeRole, roleDeletingSpeed);
+          timeoutId = setTimeout(typeRole, 40);
         } else {
           isDeleting = false;
           currentRoleIndex = (currentRoleIndex + 1) % roles.length;
-          timeoutId = setTimeout(typeRole, roleTypingSpeed);
+          timeoutId = setTimeout(typeRole, 500);
         }
       }
     };
 
     timeoutId = setTimeout(typeRole, 500);
-
     return () => clearTimeout(timeoutId);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-900/50 via-[#0a0a1e] to-[#0a0a1e] text-white pt-16">
+    <div className="min-h-screen bg-background text-foreground pt-24 pb-12 bg-grid">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Side: Intro & Visual */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className="relative mb-8 group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-syntax-keyword via-syntax-function to-syntax-number rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              <ProfileImage size={256} />
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-mono">
+              <span className="text-syntax-keyword">class</span> <span className="text-syntax-function">Deepak</span> <span className="text-foreground">{"{"}</span>
+            </h1>
+            <p className="text-lg text-muted mb-8 max-w-md font-mono leading-relaxed">
+              <span className="text-syntax-keyword">private</span> <span className="text-syntax-number">passion</span> = <span className="text-syntax-string">&quot;Building innovative tech solutions&quot;</span>;
+              <br />
+              <span className="text-syntax-keyword">public</span> <span className="text-syntax-number">goal</span> = <span className="text-syntax-string">&quot;Shaping the world through software&quot;</span>;
+            </p>
+            
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href="/projects"
+                  className="inline-block px-6 py-2.5 bg-accent hover:opacity-90 text-white rounded font-mono text-sm transition-all shadow-[0_0_15px_rgba(var(--accent-rgb),0.3)]"
+                >
+                  ./view_projects.sh
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href="/contact"
+                  className="inline-block px-6 py-2.5 border border-border hover:bg-card text-foreground rounded font-mono text-sm transition-all"
+                >
+                  contact.send()
+                </Link>
+              </motion.div>
+            </div>
+          </div>
 
-      {/* Home Section */}
-      <section className="min-h-screen flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-            {/* Profile Photo with floating animation */}
-            <div className="flex-shrink-0 animate-float order-1 lg:order-1">
-              <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-80 lg:h-80 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center overflow-hidden shadow-2xl hover:border-purple-500/50 transition-all duration-500">
-                <div className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-60 lg:h-60 rounded-full overflow-hidden shadow-lg animate-scaleIn">
-                  <Image
-                    src={profileImage}
-                    alt="Deepak - Profile Photo"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+          {/* Right Side: IDE / Terminal Window */}
+          <div className="lg:col-span-7">
+            <div className="terminal-window animate-terminal">
+              <div className="terminal-header">
+                <div className="flex gap-1.5">
+                  <div className="terminal-dot bg-[#ff5f56]"></div>
+                  <div className="terminal-dot bg-[#ffbd2e]"></div>
+                  <div className="terminal-dot bg-[#27c93f]"></div>
+                </div>
+                <div className="flex-1 text-center">
+                  <span className="text-xs text-muted font-mono italic">~/portfolio/about.py — 64x24</span>
+                </div>
+              </div>
+              <div className="terminal-body text-sm sm:text-base leading-relaxed overflow-x-auto">
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">1</span>
+                  <p><span className="code-keyword">import</span> deepak_kadian <span className="code-keyword">as</span> me</p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">2</span>
+                  <p><span className="code-keyword">from</span> skills <span className="code-keyword">import</span> *</p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">3</span>
+                  <p>&nbsp;</p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">4</span>
+                  <p><span className="code-keyword">def</span> <span className="code-function">init_profile</span>():</p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">5</span>
+                  <p className="pl-4"><span className="code-variable">me</span>.name = <span className="code-string">&quot;Deepak&quot;</span></p>
+                </div>
+                <div className="flex gap-4 h-6 sm:h-7">
+                  <span className="text-muted select-none">6</span>
+                  <p className="pl-4">
+                    <span className="code-variable">me</span>.role = <span className="code-string">&quot;{roleText}&quot;</span>
+                    <span className="cursor-blink inline-block w-2 h-5 bg-syntax-number ml-1 align-middle"></span>
+                  </p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">7</span>
+                  <p className="pl-4"><span className="code-variable">me</span>.location = <span className="code-string">&quot;Earth, Solar System&quot;</span></p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">8</span>
+                  <p className="pl-4"><span className="code-variable">me</span>.status = <span className="code-string">&quot;Always Learning&quot;</span></p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">9</span>
+                  <p>&nbsp;</p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">10</span>
+                  <p><span className="code-keyword">if</span> __name__ == <span className="code-string">&quot;__main__&quot;</span>:</p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">11</span>
+                  <p className="pl-4"><span className="code-function">init_profile</span>()</p>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-muted select-none">12</span>
+                  <p className="pl-4"><span className="code-function">print</span>(<span className="code-string">&quot;Hello, World!&quot;</span>)</p>
                 </div>
               </div>
             </div>
-
-            {/* Name & About with staggered animations */}
-            <div className="flex-1 text-center lg:text-left order-2 lg:order-2">
-              <h1 
-                className="text-3xl sm:text-4xl lg:text-7xl font-bold mb-4 lg:mb-6 animate-slideInLeft"
-                style={{ minHeight: "1.2em" }}
-              >
-                <span className="gradient-text">{typedText}</span>
-                <span className="cursor-blink inline-block w-1 h-6 sm:h-8 lg:h-10 bg-purple-500 ml-1 align-middle"></span>
-              </h1>
-              <p className="text-base sm:text-lg lg:text-2xl text-gray-400 mb-6 lg:mb-8 max-w-2xl animate-fadeIn stagger-2">
-                I am a <span className="text-purple-400 font-semibold">{roleText}</span>
-                <span className="cursor-blink inline-block w-1 h-4 sm:h-5 lg:h-6 bg-purple-500 ml-1 align-middle"></span>
-                <br className="lg:hidden" /><br className="lg:hidden" />
-                <span className="lg:hidden"><br /></span> <br />
-                With a strong passion for technology and innovation, I am driven by how software and emerging technologies shape the world.
-              </p>
-              <div className="flex flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start animate-fadeIn stagger-3">
-                <Link
-                  href="/projects"
-                  className="px-6 lg:px-8 py-2.5 lg:py-3 bg-white text-[#0a0a1e] font-semibold rounded-lg hover:bg-gray-200 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 text-sm lg:text-base"
-                >
-                  View Projects
-                </Link>
-                <Link
-                  href="/contact"
-                  className="px-6 lg:px-8 py-2.5 lg:py-3 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 hover:border-purple-500/50 hover:scale-105 transition-all duration-300 text-sm lg:text-base"
-                >
-                  Contact Me
-                </Link>
-              </div>
+            
+            {/* Tech Stack Pills */}
+            <div className="mt-8 flex flex-wrap gap-2 justify-center lg:justify-start">
+              {["Python", "React", "TypeScript", "Machine Learning", "Data Analysis"].map((skill) => (
+                <span key={skill} className="px-3 py-1 bg-card border border-border rounded-full text-xs font-mono text-muted">
+                  {skill}
+                </span>
+              ))}
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
 };
 
 export default HomePage;
-

@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,6 +12,19 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        muted: "var(--muted-foreground)",
+        card: "var(--card)",
+        border: "var(--border)",
+        accent: "var(--accent)",
+        "terminal-bg": "var(--terminal-bg)",
+        syntax: {
+          keyword: "var(--syntax-keyword)",
+          string: "var(--syntax-string)",
+          function: "var(--syntax-function)",
+          variable: "var(--syntax-variable)",
+          comment: "var(--syntax-comment)",
+          number: "var(--syntax-number)",
+        },
       },
     },
   },
