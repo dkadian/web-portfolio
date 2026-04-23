@@ -55,7 +55,7 @@ const SkillsPage = () => {
             {categories.map(([category, skillList], index) => (
               <div
                 key={index}
-                className="bg-card border border-border rounded-lg p-6 hover:border-syntax-function/30 transition-all animate-fadeIn"
+                className="bg-card border border-border rounded-lg p-6 hover:border-syntax-function/50 hover:shadow-glow-sm hover:-translate-y-1 transition-all duration-300 animate-fadeIn"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <h3 className="text-syntax-function font-mono text-lg mb-6 flex items-center gap-2">

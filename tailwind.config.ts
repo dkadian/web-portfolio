@@ -26,6 +26,14 @@ export default {
           number: "var(--syntax-number)",
         },
       },
+      boxShadow: {
+        glow: "0 0 20px rgba(var(--accent-rgb), 0.5)",
+        "glow-sm": "0 0 10px rgba(var(--accent-rgb), 0.3)",
+      },
+      fontFamily: {
+        sans: ["var(--font-courier)"],
+        mono: ["var(--font-typewriter)"],
+      },
     },
   },
   plugins: [],

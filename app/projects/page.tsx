@@ -49,7 +49,7 @@ const ProjectsPage = () => {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="group bg-card border border-border rounded-lg p-6 hover:border-syntax-number/50 transition-all duration-300 flex flex-col animate-fadeIn"
+                className="group bg-card border border-border rounded-lg p-6 hover:border-syntax-number/50 hover:shadow-glow-sm hover:-translate-y-1 transition-all duration-300 flex flex-col animate-fadeIn"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-start justify-between mb-4">

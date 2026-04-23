@@ -36,7 +36,7 @@ const TechMetadata = () => {
       </div>
       <div>Uptime: {stats.uptime}</div>
       <div>Latency: {stats.latency}</div>
-      <div>Environment: <span className="text-syntax-keyword">Production</span></div>
+      <div>Deployment: <span className="text-syntax-keyword">Live</span></div>
       <div>Version: <span className="text-syntax-number">1.2.0-stable</span></div>
       <div className="ml-auto">{stats.time}</div>
     </div>

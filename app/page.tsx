@@ -79,7 +79,7 @@ const HomePage = () => {
               >
                 <Link
                   href="/projects"
-                  className="inline-block px-6 py-2.5 bg-accent hover:opacity-90 text-white rounded font-mono text-sm transition-all shadow-[0_0_15px_rgba(var(--accent-rgb),0.3)]"
+                  className="inline-block px-6 py-2.5 bg-accent hover:opacity-90 text-white rounded-lg font-mono text-sm transition-all shadow-[0_0_15px_rgba(var(--accent-rgb),0.3)] hover:shadow-glow"
                 >
                   ./view_projects.sh
                 </Link>
@@ -91,7 +91,7 @@ const HomePage = () => {
               >
                 <Link
                   href="/contact"
-                  className="inline-block px-6 py-2.5 border border-border hover:bg-card text-foreground rounded font-mono text-sm transition-all"
+                  className="inline-block px-6 py-2.5 border border-border hover:bg-card hover:border-accent/50 text-foreground rounded-lg font-mono text-sm transition-all hover:shadow-glow-sm"
                 >
                   contact.send()
                 </Link>
@@ -101,7 +101,7 @@ const HomePage = () => {
 
           {/* Right Side: IDE / Terminal Window */}
           <div className="lg:col-span-7">
-            <div className="terminal-window animate-terminal">
+            <div className="terminal-window animate-terminal hover:shadow-glow-sm transition-all duration-500 hover:-translate-y-1">
               <div className="terminal-header">
                 <div className="flex gap-1.5">
                   <div className="terminal-dot bg-[#ff5f56]"></div>

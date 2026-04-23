@@ -33,7 +33,7 @@ const EducationPage = () => {
             
             {/* Degree Progress (Left) */}
             <div className="lg:col-span-7">
-              <div className="bg-card border border-border rounded-lg overflow-hidden animate-fadeIn">
+              <div className="bg-card border border-border rounded-lg overflow-hidden animate-fadeIn hover:shadow-glow-sm transition-all duration-300 hover:-translate-y-1">
                 <div className="bg-background border-b border-border px-4 py-2 flex items-center justify-between">
                   <span className="text-xs font-mono text-muted">degree_audit.log</span>
                   <span className="text-xs font-mono text-accent">ACTIVE</span>

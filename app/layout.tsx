@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Courier_Prime, Special_Elite } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/Navigation";
 import PageWrapper from "./components/PageWrapper";
 import { ThemeProvider } from "./components/ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const courierPrime = Courier_Prime({
+  weight: ["400", "700"],
+  variable: "--font-courier",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const specialElite = Special_Elite({
+  weight: ["400"],
+  variable: "--font-typewriter",
   subsets: ["latin"],
 });
 
@@ -28,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-accent/30`}
+        className={`${courierPrime.variable} ${specialElite.variable} antialiased selection:bg-accent/30`}
       >
         <ThemeProvider>
           <Navigation />

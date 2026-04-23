@@ -84,7 +84,7 @@ const ContactPage = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Left Column: Direct Mail Form */}
-            <div className="terminal-window animate-slideInLeft">
+            <div className="terminal-window animate-slideInLeft hover:shadow-glow-sm transition-all duration-500 hover:-translate-y-1">
               <div className="terminal-header">
                 <div className="flex gap-1.5">
                   <div className="terminal-dot bg-[#ff5f56]"></div>
