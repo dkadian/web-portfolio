@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
-import { Courier_Prime, Special_Elite } from "next/font/google";
+import { Plus_Jakarta_Sans, Mr_De_Haviland } from "next/font/google";
 import "./globals.css";
+import CustomCursor from "./components/CustomCursor";
 import Navigation from "./components/Navigation";
-import PageWrapper from "./components/PageWrapper";
-import { ThemeProvider } from "./components/ThemeProvider";
+import Footer from "./components/Footer";
+import ParticleBackground from "./components/ParticleBackground";
 
-const courierPrime = Courier_Prime({
-  weight: ["400", "700"],
-  variable: "--font-courier",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
 });
 
-const specialElite = Special_Elite({
-  weight: ["400"],
-  variable: "--font-typewriter",
+const signature = Mr_De_Haviland({
+  weight: "400",
+  variable: "--font-signature",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Deepak",
-  description: "Portfolio website for Deepak Kadian.",
+  title: "Deepak Kadian | AI-ML Engineer",
+  description: "Portfolio of Deepak Kadian, a Full-Stack Developer specializing in clean, performant web applications.",
 };
 
 export default function RootLayout({
@@ -28,14 +28,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark">
       <body
-        className={`${courierPrime.variable} ${specialElite.variable} antialiased selection:bg-accent/30`}
+        className={`${plusJakarta.variable} ${signature.variable} antialiased bg-[#09090b] text-[#fafafa] selection:bg-sky-500/20 cursor-none`}
       >
-        <ThemeProvider>
-          <Navigation />
-          <PageWrapper>{children}</PageWrapper>
-        </ThemeProvider>
+        <ParticleBackground />
+        <CustomCursor />
+        <Navigation />
+        <div className="min-h-screen pt-32 pb-12 px-6 max-w-5xl mx-auto overflow-x-hidden">
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );

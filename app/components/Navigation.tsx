@@ -1,110 +1,92 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import ProfileImage from "./ProfileImage";
-import ThemeToggle from "./ThemeToggle";
+import { useState, useEffect } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
+
+const links = [
+  { href: "#home", label: "Home" },
+  { href: "#projects", label: "Projects" },
+  { href: "#skills", label: "Skills" },
+  { href: "#education", label: "Education" },
+  { href: "#cv", label: "CV" },
+  { href: "#contact", label: "Contact" },
+];
 
 const Navigation = () => {
-  const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const navItems = [
-    { name: "Home", href: "/", code: "<Home />" },
-    { name: "Projects", href: "/projects", code: "./projects" },
-    { name: "Skills", href: "/skills", code: "skills.json" },
-    { name: "Education", href: "/education", code: "education.edu" },
-    { name: "CV", href: "/cv", code: "resume.pdf" },
-    { name: "Contact", href: "/contact", code: "contact.send()" },
-  ];
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
+
+      const sections = links.map(link => link.href.substring(1));
+      const currentSection = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isActive = (href: string) => pathname === href;
-
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-mono ${
-        isScrolled 
-          ? "bg-background/90 backdrop-blur-md py-2 border-b border-border" 
-          : "bg-transparent py-4"
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-3 text-lg font-bold group">
-            <ProfileImage size={40} className="!rounded" />
-            <span className="text-foreground hover:text-accent transition-colors">
-              <span className="text-syntax-keyword">const</span> deepak = <span className="text-syntax-string">()</span> =&gt;
-            </span>
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm px-3 py-1.5 rounded transition-all duration-200 ${
-                    isActive(item.href)
-                      ? "bg-card text-accent border border-border"
-                      : "text-muted hover:text-foreground hover:bg-card/50"
-                  }`}
-                >
-                  {item.code}
-                </Link>
-              ))}
-            </div>
-            <ThemeToggle />
-          </div>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "py-4" : "py-8"}`}>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-[2px] bg-sky-500 origin-left z-50"
+        style={{ scaleX }}
+      />
+      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
+        {/* Typographic Logo */}
+        <a href="#home" className="group flex items-center gap-3 hover:opacity-70 transition-opacity">
+          <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-bold text-white group-hover:border-sky-500/50 transition-colors">D</div>
+          <span className="text-sm font-bold tracking-tighter text-white">KADIAN<span className="text-sky-500">.</span></span>
+        </a>
 
-          {/* Mobile Menu Button & Toggle */}
-          <div className="md:hidden flex items-center gap-4">
-            <ThemeToggle />
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-muted hover:text-foreground"
-            >
-              {isMobileMenuOpen ? "close()" : "menu()"}
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      <div 
-        className={`md:hidden absolute left-0 right-0 bg-background border-b border-border transition-all duration-300 ${
-          isMobileMenuOpen ? 'opacity-100 visible top-full' : 'opacity-0 invisible -top-4'
-        }`}
-      >
-        <div className="px-4 py-4 space-y-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`block px-4 py-3 rounded text-sm ${
-                isActive(item.href)
-                  ? "bg-card text-accent"
-                  : "text-muted hover:bg-card/50"
-              }`}
-            >
-              {item.code}
-            </Link>
-          ))}
+        {/* Navigation Links */}
+        <div className="flex items-center gap-1 p-1 bg-zinc-900/60 backdrop-blur-2xl border border-zinc-800/50 rounded-full shadow-2xl">
+          {links.map((link) => {
+            const sectionId = link.href.substring(1);
+            const isActive = activeSection === sectionId;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`relative px-5 py-2 text-xs font-semibold transition-all duration-500 rounded-full ${
+                  isActive ? "text-white" : "text-zinc-500 hover:text-zinc-300"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="active-nav"
+                    className="absolute inset-0 bg-white/[0.03] rounded-full border border-white/5"
+                    transition={{ type: "spring", duration: 0.8, bounce: 0.1 }}
+                  />
+                )}
+                <span className="relative z-10">{link.label}</span>
+              </a>
+            );
+          })}
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 
