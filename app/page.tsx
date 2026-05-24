@@ -139,41 +139,6 @@ const TiltCard = ({ children, className = "" }: { children: React.ReactNode; cla
   );
 };
 
-const SpotlightCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <motion.div
-      onMouseMove={onMouseMove}
-      className={`group relative glass-card overflow-hidden ${className}`}
-      style={{ willChange: "transform, background-color, border-color" }}
-    >
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[1.5rem] opacity-0 transition duration-500 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              600px circle at ${mouseX}px ${mouseY}px,
-              rgba(14, 165, 233, 0.15),
-              rgba(14, 165, 233, 0) 80%
-            )
-          `,
-        }}
-      />
-      <div className="relative z-10 h-full">
-        {children}
-      </div>
-    </motion.div>
-  );
-};
-
 const SectionHeader = ({ title, description }: { title: string; description: string }) => {
   const words = title.split(" ");
   
@@ -494,8 +459,22 @@ const Projects = () => (
   </section>
 );
 
+interface GitHubContributionDay {
+  contributionCount: number;
+  date: string;
+}
+
+interface GitHubContributionWeek {
+  contributionDays: GitHubContributionDay[];
+}
+
+interface GitHubContributionCalendar {
+  weeks: GitHubContributionWeek[];
+  totalContributions: number;
+}
+
 const GitHubHub = () => {
-  const [calendar, setCalendar] = useState<any>(null);
+  const [calendar, setCalendar] = useState<GitHubContributionCalendar | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -583,7 +562,7 @@ const GitHubHub = () => {
                       <>
                         {/* Month Labels Row */}
                         <div className="flex gap-[3px]">
-                          {calendar?.weeks?.map((week: any, i: number) => {
+                          {calendar?.weeks?.map((week: GitHubContributionWeek, i: number) => {
                             const firstDay = new Date(week.contributionDays[0].date);
                             const isFirstWeekOfMonth = firstDay.getDate() <= 7;
                             return (
@@ -600,9 +579,9 @@ const GitHubHub = () => {
 
                         {/* Squares Grid */}
                         <div className="flex gap-[3px]">
-                          {calendar?.weeks?.map((week: any, i: number) => (
+                          {calendar?.weeks?.map((week: GitHubContributionWeek, i: number) => (
                             <div key={i} className="flex flex-col gap-[3px] flex-shrink-0">
-                              {week.contributionDays.map((day: any, j: number) => {
+                              {week.contributionDays.map((day: GitHubContributionDay, j: number) => {
                                 const count = day.contributionCount;
                                 let color = "#18181b"; // Empty
                                 
@@ -700,7 +679,7 @@ const Education = () => (
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
-              {completedSGPAs.map((sem, index) => (
+              {completedSGPAs.map((sem) => (
                 <div key={sem.semester} className="space-y-1">
                   <div className="text-[9px] font-bold text-zinc-600 uppercase tracking-tighter">{sem.semester}</div>
                   <div className="text-xl font-bold text-white/80 hover:text-sky-400 transition-colors cursor-default">{sem.sgpa.toFixed(3)}</div>
@@ -719,7 +698,7 @@ const Education = () => (
             <TiltCard>
               <div className="glass-card p-10 space-y-6 hover:translate-x-1 transition-all duration-700 shadow-2xl">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-sky-500/50 uppercase tracking-widest">{item.year} // {item.title}</span>
+                  <span className="text-[10px] font-bold text-sky-500/50 uppercase tracking-widest">{`${item.year} // ${item.title}`}</span>
                 </div>
                 <h3 className="text-xl font-bold text-white leading-tight uppercase tracking-tight mb-4">{item.school}</h3>
                 <div className="flex justify-between items-end border-t border-white/5 pt-6 mt-6">

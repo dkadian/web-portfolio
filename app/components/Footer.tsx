@@ -12,7 +12,7 @@ const Footer = () => {
               <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.4em]">Certification_Authenticity</span>
             </div>
             <p className="text-zinc-500 text-sm md:text-base font-light italic leading-relaxed">
-              "I hereby certify that all technical documentation, project implementations, and academic metrics provided in this portfolio are accurate and an authentic representation of my professional trajectory."
+              &quot;I hereby certify that all technical documentation, project implementations, and academic metrics provided in this portfolio are accurate and an authentic representation of my professional trajectory.&quot;
             </p>
           </div>
           <div className="flex flex-col items-center md:items-end">

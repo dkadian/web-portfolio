@@ -58,8 +58,9 @@ export async function GET() {
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Fetch error:", error);
-    return NextResponse.json({ error: error.message || "Failed to fetch GitHub data" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Failed to fetch GitHub data";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
