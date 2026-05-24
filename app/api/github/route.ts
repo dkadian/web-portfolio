@@ -59,8 +59,8 @@ export async function GET() {
       },
     });
   } catch (error: unknown) {
-    console.error("Fetch error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Failed to fetch GitHub data";
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    console.error("GitHub API Route Error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: errorMessage, details: String(error) }, { status: 500 });
   }
 }

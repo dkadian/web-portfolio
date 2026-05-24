@@ -430,7 +430,7 @@ const Projects = () => (
                     <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                       <div className="space-y-4">
                         <span className="text-[10px] font-bold text-sky-500/50 uppercase tracking-[0.2em]">Project_0{index + 1}</span>
-                        <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white group-hover:text-sky-400 transition-colors duration-500 uppercase tracking-tighter leading-[1.1] break-words">
+                        <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white group-hover:text-sky-400 transition-colors duration-500 uppercase tracking-tighter leading-[1.1] break-words">
                           {project.title.replace(/_/g, " ")}
                         </h3>
                       </div>
