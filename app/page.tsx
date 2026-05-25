@@ -237,7 +237,6 @@ const skillsData = [
     category: "Frontend", 
     skills: [
       { name: "React", level: 70 }, 
-      { name: "Nextjs", level: 80 },
       { name: "TypeScript", level: 30 },
       { name: "Tailwind", level: 75 },
       { name: "HTML/CSS", level: 80 }
@@ -246,6 +245,7 @@ const skillsData = [
   { 
     category: "Backend", 
     skills: [
+      { name: "Python", level: 85 },
       { name: "FastAPI", level: 75 },
       { name: "Express", level: 70 },
       { name: "Java", level: 70 }
@@ -254,7 +254,7 @@ const skillsData = [
   { 
     category: "Data Visualization", 
     skills: [
-      { name: "Python", level: 85 },
+      
       { name: "Pandas", level: 85 }, 
       { name: "NumPy", level: 80 }, 
       { name: "SQL", level: 80 },
