@@ -4,74 +4,6 @@ import { useState, useEffect } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
-// --- Icons (Refined SVGs) ---
-
-const TechIcons = {
-  React: () => (
-    <svg viewBox="-11.5 -10.23177 23 20.46355" className="w-full h-full fill-current"><circle cx="0" cy="0" r="2.05" fill="currentColor"/><g stroke="currentColor" strokeWidth="1" fill="none"><ellipse rx="11" ry="4.2"/><ellipse rx="11" ry="4.2" transform="rotate(60)"/><ellipse rx="11" ry="4.2" transform="rotate(120)"/></g></svg>
-  ),
-  Nextjs: () => (
-    <svg viewBox="0 0 128 128" className="w-full h-full fill-current"><path d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64c11.2 0 21.7-2.9 30.8-7.9L48.4 55.4v33.3h-9.2V40.2h9.2l40.4 52.8c5.4-8.1 8.6-17.9 8.6-29 0-35.3-28.7-64-64-64zm31.4 40.2h9.2v23.1l-9.2-12v-11.1z"/></svg>
-  ),
-  TypeScript: () => (
-    <svg viewBox="0 0 128 128" className="w-full h-full fill-current"><path d="M1.5 1.5h125v125H1.5V1.5zm81.4 69.4c0-11-9.4-15.1-18.4-18.4-11-4.1-13.4-6.4-13.4-11.3 0-4.6 4.3-7.5 10.1-7.5 7.1 0 12.3 3.1 15.1 8.2l12.4-8.5c-4.9-9.1-13.7-13.7-25-13.7-16.7 0-27.1 9.5-27.1 21.7 0 11.3 8.3 16.4 19.8 20.4 11.1 3.9 14.5 7.1 14.5 12.3 0 5.7-5.5 9-12.7 9-9 0-16-4.5-19.1-11.4l-12.7 7.2c5.4 12.4 17.5 18.2 31.8 18.2 19 0 32.6-10 32.6-24.5zM103.7 34h-42v12.4h14.7V105h12.6V46.4h14.7V34z"/></svg>
-  ),
-  Tailwind: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8 1.313.328 2.251 1.274 3.29 2.323C15.195 11.83 17.062 13.7 20.401 13.7c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-1.313-.328-2.251-1.274-3.29-2.323C17.207 6.67 15.34 4.8 12.001 4.8zm-6 8.9c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8 1.313.328 2.251 1.274 3.29 2.323C9.195 20.73 11.062 22.6 14.401 22.6c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-1.313-.328-2.251-1.274-3.29-2.323C11.207 15.57 9.34 13.7 6.001 13.7z"/></svg>
-  ),
-  Python: () => (
-    <svg viewBox="0 0 448 512" className="w-full h-full fill-current"><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.9 11-66.3 0-101.8zm-151 162c-13.6 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5 24.5 11 24.5 24.5-11 24.5-24.5 24.5zM160.3 288.5v-47.4c0-36.8 31.2-67.8 66.8-67.8h106.8c29.2 0 53.4-25 53.4-54.3V17.2c0-29-25.2-46-53.4-54.3-33.8-9.9-66.3-11.7-106.8 0C200.2-29.3 173.7-13.6 173.7 17.2v40.7h106.8v13.6H120.3c-31.1 0-42.6 21.7-53.4 54.2-11.2 33.9-11 66.3 0 101.8 7.7 30.9 22.3 54.2 53.4 54.2h40zm0-214.6c13.6 0 24.5 11 24.5 24.5s-11 24.5-24.5 24.5-24.5-11-24.5-24.5 11-24.5 24.5-24.5z"/></svg>
-  ),
-  Pandas: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M12.44 2.89h1.16v18.22h-1.16zm-3.48 4.6h1.16v13.62H8.96zm-3.48 4.6h1.16v9.02H5.48zm10.44-4.6h1.16v13.62h-1.16zm3.48 4.6H20.56v9.02h-1.16z"/></svg>
-  ),
-  NumPy: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M11.23 6.9L4.47 10.8V13.1L11.23 9.2V6.9zM12.77 6.9V9.2L19.53 13.1V10.8L12.77 6.9zM3 11.6V18.1L11.23 22V15.5L3 11.6zM12.77 22L21 18.1V11.6L12.77 15.5V22zM12 2L3 6.6L11.23 10.8L20.2 6.3L12 2z"/></svg>
-  ),
-  Scikitlearn: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M12 12m-10 0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0M6 12h12M12 6v12"/></svg>
-  ),
-  Git: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M23.546 10.93L13.067.452a1.905 1.905 0 0 0-2.693 0L8.92 1.905l3.197 3.197a1.593 1.905 0 1 1 2.694 2.694l-3.197-3.197v5.274l3.197 3.197a1.593 1.905 0 1 1-2.69 2.69l-3.197-3.197V8.514L5.851 5.317a1.593 1.905 0 1 1 2.693-2.693L10.01 4.09 1.454 10.93a1.905 1.905 0 0 0 0 2.692l10.48 10.48a1.905 1.905 0 0 0 2.692 0l10.48-10.48a1.905 1.905 0 0 0 0-2.692z"/></svg>
-  ),
-  MongoDB: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M17.193 9.555c-1.353-4.364-4.576-7.838-5.193-8.482-.617.644-3.84 4.118-5.193 8.482-1.493 4.81.336 8.52 1.104 9.818l3.666 4.312.188.225.188-.225 3.666-4.312c.768-1.298 2.597-5.008 1.104-9.818zm-5.193 9.42c-2.456-4.225-.56-8.257-.56-8.257s.13 2.11 1.764 4.17c1.635 2.06 1.144 5.342 1.144 5.342-.98.375-1.558.077-2.348-1.255z"/></svg>
-  ),
-  GitHub: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-  ),
-  LinkedIn: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-  ),
-  Education: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM3.85 10.55l7.15 3.9 7.15-3.9L11 6.65l-7.15 3.9zM12 16.5c-2.3 0-4.4-.9-6-2.4V19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-4.9c-1.6 1.5-3.7 2.4-6 2.4z"/></svg>
-  ),
-  HTMLCSS: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/></svg>
-  ),
-  Express: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm-1 3v6h6v2h-8V5h2z"/></svg>
-  ),
-  Java: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M6.1 19.1c-.1.1-.1.2-.1.3 0 .4.4.7 1.3 1.1 1 .5 2.7.9 4.4.9s3.4-.4 4.4-.9c.9-.4 1.3-.7 1.3-1.1s-.4-.7-1.3-1.1c-1-.5-2.7-.9-4.4-.9s-3.4.4-4.4.9c-.8.4-1.2.7-1.2 1.1zm-.4-2.5c0 .1 0 .1.1.2 1.3 1.2 4 1.9 6.2 1.9s4.9-.7 6.2-1.9c.1-.1.1-.1.1-.2V15c0-.6-.5-1.1-1.3-1.5-1-.5-2.7-.9-4.4-.9s-3.4.4-4.4.9c-.8.4-1.3.9-1.3 1.5v1.6zm.4-12.7C5.3 4.6 5 5.5 5 6.4c0 1.9 1.4 3.5 3.3 4.1-.1-.3-.1-.5-.1-.8 0-1.8 1.4-3.3 3.3-3.3.3 0 .5 0 .8.1-.6-1.9-2.2-3.3-4.2-3.3z"/></svg>
-  ),
-  Docker: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current"><path d="M13.962 6.075c.083-.03.16-.052.232-.07a.23.23 0 0 0 .15-.24c-.03-.23-.03-.46-.015-.69a.25.25 0 0 0-.21-.26 3.96 3.96 0 0 0-.585-.045 4.35 4.35 0 0 0-4.35 4.35 4.35 4.35 0 0 0 .105.945c.03.135.15.225.285.225h.465c.135 0 .24-.105.27-.24.06-.23.105-.465.135-.69a3.15 3.15 0 0 1 3.51-3.285zM2.13 10.32c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24v-2.73a.24.24 0 0 0-.24-.24zm3.36 0c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24v-2.73a.24.24 0 0 0-.24-.24zm3.36 0c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24v-2.73a.24.24 0 0 0-.24-.24zm3.36 0c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24v-2.73a.24.24 0 0 0-.24-.24zm0-3.36c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24v-2.73a.24.24 0 0 0-.24-.24zm3.36 0c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24v-2.73a.24.24 0 0 0-.24-.24zm3.36 0c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24v-2.73a.24.24 0 0 0-.24-.24zm-6.72-3.36c-.135 0-.24.105-.24.24v2.73c0 .135.105.24.24.24h2.73c.135 0 .24-.105.24-.24V3.84a.24.24 0 0 0-.24-.24z"/></svg>
-  ),
-  Frontend: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-  ),
-  Backend: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>
-  ),
-  Data: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-  ),
-  Tools: () => (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-  )
-};
-
 // --- Components ---
 
 const Magnetic = ({ children, strength = 0.5 }: { children: React.ReactElement; strength?: number }) => {
@@ -149,20 +81,13 @@ const SectionHeader = ({ title, description }: { title: string; description: str
       viewport={{ once: true }}
       className="space-y-4 mb-24 max-w-2xl"
     >
-      <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white flex flex-wrap gap-x-4">
+      <motion.h2 className="text-3xl md:text-5xl font-bold text-white tracking-tighter uppercase leading-none">
         {words.map((word, i) => (
-          <motion.span
-            key={i}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
-            }}
-            transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <span key={i} className="inline-block mr-3">
             {word}
-          </motion.span>
+          </span>
         ))}
-      </h2>
+      </motion.h2>
       <motion.p 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -194,8 +119,21 @@ const Reveal = ({ children, delay = 0, y = 20, className = "" }: { children: Rea
 );
 
 const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; index: number }) => {
-  const IconName = skill.name.replace(".", "").replace("/", "").replace(" ", "");
-  const Icon = TechIcons[IconName as keyof typeof TechIcons] || TechIcons.React;
+  const slug = skill.name.toLowerCase().replace(/[.\/\s]/g, "");
+  let logoName = slug;
+  if (slug === "htmlcss") logoName = "html";
+  
+  const logoPath = `/tech-logos/${logoName}.svg`;
+
+  // Logos that need inversion/brightness for dark mode
+  const invertLogos = ["n8n", "express", "nextjs"];
+  const brightenLogos = ["pandas", "sql"];
+  
+  const filterClass = invertLogos.includes(logoName) 
+    ? "invert brightness-[2]" 
+    : brightenLogos.includes(logoName) 
+    ? "brightness-[3] contrast-[1.2]" 
+    : "";
 
   return (
     <motion.div 
@@ -207,8 +145,18 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <div className="w-4 h-4 text-zinc-500 group-hover:text-sky-400 transition-colors">
-            <Icon />
+          <div className={`w-5 h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
+            <Image 
+              src={logoPath} 
+              alt={`${skill.name} logo`} 
+              fill 
+              sizes="20px"
+              className="object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.opacity = "0";
+              }}
+            />
           </div>
           <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">{skill.name}</span>
         </div>
@@ -220,7 +168,7 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
           whileInView={{ width: `${skill.level}%` }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: "easeOut", delay: (index * 0.1) + 0.2 }}
-          className="h-full bg-sky-500/50 group-hover:bg-sky-500 transition-colors"
+          className="h-full bg-sky-500/50 group-hover:bg-sky-400 transition-colors"
         />
       </div>
     </motion.div>
@@ -231,7 +179,7 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
 
 const projects = [
   {
-    title: "PathFinder : A Career Councelling Assistant",
+    title: "PathFinder : A Career-Councelling Assistant",
     description: "This is a comprehensive full-stack career counseling platform that integrates AI-driven chat guidance with automated resume parsing to provide personalized professional roadmaps and profile management.",
     tech : ["Python", "FastAPI", "SQLAlchemy", "SQLite (aiosqlite)", "OpenRouter (for Llama models)", "LM Studio (for local LLMs)", "HuggingFace (Transformers/Accelerate)", "PyMuPDF/pdfplumber",     "React", "Vite", "Tailwind CSS", "Mermaid.js"],
     link : "https://github.com/dkadian/career-assistant",
@@ -245,7 +193,7 @@ const projects = [
   {
     title: "web-portfolio",
     description: "A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases my skills, projects, education, and provides a way to connect with me.",
-    tech: ["TypeScript", "Tailwind CSS", "Next.js"],
+    tech: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion"],
     link: "https://github.com/dkadian/web-portfolio",
     stats: "v1.2.0",
     images: [
@@ -257,7 +205,7 @@ const projects = [
   {
     title: "Dogs_cats_recog",
     description: "This repository implements a Support Vector Machine (SVM) classifier in Python to classify images of cats and dogs from the popular Kaggle Cats vs Dogs dataset.",
-    tech: ["Python", "SVM", "Scikit-Learn"],
+    tech: ["Python", "FastAPI", "TensorFlow", "MobileNetV2", "Transformers", "Pillow", "OpenCV", "React", "TypeScript","Vite"],
     link: "https://github.com/dkadian/Dogs_cats_recog",
     stats: "94% Acc",
     images: [
@@ -285,21 +233,66 @@ const projects = [
 ];
 
 const skillsData = [
-  { category: "Frontend", skills: [{ name: "React", level: 90 }, { name: "Tailwind", level: 95 }, { name: "HTML/CSS", level: 90 }] },
-  { category: "Backend", skills: [{ name: "Express", level: 75 }, { name: "Python", level: 85 }, { name: "Java", level: 70 }] },
-  { category: "Data", skills: [{ name: "Pandas", level: 85 }, { name: "NumPy", level: 80 }, { name: "Scikit-learn", level: 80 }] },
-  { category: "Tools", skills: [{ name: "MongoDB", level: 70 }, { name: "Git", level: 85 }, { name: "Docker", level: 60 }] },
+  { 
+    category: "Frontend", 
+    skills: [
+      { name: "React", level: 70 }, 
+      { name: "Nextjs", level: 80 },
+      { name: "TypeScript", level: 30 },
+      { name: "Tailwind", level: 75 },
+      { name: "HTML/CSS", level: 80 }
+    ] 
+  },
+  { 
+    category: "Backend", 
+    skills: [
+      { name: "FastAPI", level: 75 },
+      { name: "Express", level: 70 },
+      { name: "Java", level: 70 }
+    ] 
+  },
+  { 
+    category: "Data Visualization", 
+    skills: [
+      { name: "Python", level: 85 },
+      { name: "Pandas", level: 85 }, 
+      { name: "NumPy", level: 80 }, 
+      { name: "SQL", level: 80 },
+      { name: "PowerBI", level: 75 }
+    ] 
+  },
+  { 
+    category: "Deep Learning", 
+    skills: [
+      { name: "TensorFlow", level: 70 }, 
+      { name: "OpenCV", level: 75 },
+      { name: "Scikitlearn", level: 80 }
+    ] 
+  },
+  { 
+    category: "Tools", 
+    skills: [
+      { name: "Git", level: 85 }, 
+      { name: "Jupyter Notebook", level: 80 },
+      { name: "Docker", level: 40 }, 
+      { name: "MongoDB", level: 70 },
+      { name: "n8n", level: 60 }
+    ] 
+  },
 ];
-
 const completedSGPAs = [
   { semester: "Semester 01", sgpa: 8.286 },
   { semester: "Semester 02", sgpa: 7.500 },
   { semester: "Semester 03", sgpa: 8.900 },
   { semester: "Semester 04", sgpa: 8.526 },
   { semester: "Semester 05", sgpa: 8.391 },
+  { semester: "Semester 06", sgpa: null },
+  { semester: "Semester 07", sgpa: null },
+  { semester: "Semester 08", sgpa: null }
 ];
 
-const cgpa = (completedSGPAs.reduce((acc, curr) => acc + curr.sgpa, 0) / completedSGPAs.length).toFixed(2);
+const validSGPAs = completedSGPAs.filter(s => typeof s.sgpa === 'number' && s.sgpa !== null);
+const cgpa = (validSGPAs.reduce((acc, curr) => acc + (curr.sgpa as number), 0) / validSGPAs.length).toFixed(2);
 
 // --- Sections ---
 
@@ -327,7 +320,7 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex flex-col items-center justify-center py-32 max-w-7xl mx-auto px-6 text-center">
       {/* Theme Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[120px] pointer-events-none -z-10" />
-      
+
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }} className="relative z-10 space-y-20">
         <Reveal delay={0.2} y={10}>
           <div className="flex items-center justify-center gap-4 text-zinc-500 font-medium text-sm tracking-tight">
@@ -337,8 +330,8 @@ const Hero = () => {
           </div>
         </Reveal>
 
-        <div className="flex flex-col items-center gap-16">
-          <Reveal delay={0.4} y={30}>
+        <div className="flex flex-col items-center gap-12">
+          <Reveal delay={0.4}>
             <TiltCard>
               <div className="relative w-56 h-56 md:w-72 md:h-72 group perspective-1000">
                 <motion.div 
@@ -392,54 +385,40 @@ const Hero = () => {
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-30 pointer-events-none">
                   <button 
                     onClick={() => setIsFlipped(!isFlipped)}
-                    className="pointer-events-auto group/btn flex flex-col items-center gap-3 transition-all duration-1000"
+                    className="pointer-events-auto px-4 py-2 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-sky-500 hover:border-sky-400 transition-all active:scale-95 shadow-2xl"
                   >
-                    <div className="w-8 h-8 rounded-full border border-white/[0.05] flex items-center justify-center group-hover/btn:border-sky-500/20 transition-colors duration-1000">
-                      <div className="w-1 h-1 rounded-full bg-white/10 group-hover/btn:bg-sky-500/50 transition-colors duration-1000" />
-                    </div>
-                    <span className="text-[7px] font-mono text-white/5 tracking-[0.5em] uppercase group-hover/btn:text-white/20 transition-colors duration-1000">
-                      {isFlipped ? "Secure" : "Reveal"}
-                    </span>
+                    {isFlipped ? "Secure_Identity" : "Reveal_Identity"}
                   </button>
                 </div>
               </div>
             </TiltCard>
           </Reveal>
 
-          <div className="space-y-12">
-            <Reveal delay={0.6} y={20}>
-              <h1 className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-[0.8] select-none">
-                <span className="text-white">Deepak</span> <br />
-                <span className="text-sky-500">Kadian.</span>
+          <div className="space-y-6">
+            <Reveal delay={0.6}>
+              <h1 className="text-5xl md:text-8xl font-bold text-white tracking-tighter uppercase leading-[0.85]">
+                Deepak <br /> <span className="text-sky-500">Kadian</span>
               </h1>
             </Reveal>
-
-            <Reveal delay={0.8} y={20}>
-              <div className="flex flex-col items-center gap-8">
-                <p className="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed tracking-tight text-balance">
-                  Building innovative technical systems with a focus on data analysis, machine learning, and high-performance software architecture.
-                </p>
-                <div className="h-px w-24 bg-sky-500/20" />
-                <p className="text-sky-400 font-mono text-lg font-bold tracking-tight">
-                  {roleText}<span className="inline-block w-[1px] h-5 bg-sky-500/50 ml-2 animate-pulse align-middle"></span>
-                </p>
+            <Reveal delay={0.8}>
+              <div className="flex flex-col items-center gap-4">
+                <div className="h-8 flex items-center justify-center">
+                  <span className="text-zinc-500 font-mono text-lg uppercase tracking-widest">{roleText}</span>
+                  <span className="w-[2px] h-6 bg-sky-500 ml-2 animate-pulse" />
+                </div>
               </div>
             </Reveal>
           </div>
         </div>
 
-        <Reveal delay={1} y={20}>
-          <div className="flex flex-wrap justify-center gap-12 pt-8">
-            <Magnetic strength={0.3}>
-              <a href="#projects" className="group flex items-center gap-3 text-xs font-bold text-white uppercase tracking-widest hover:opacity-50 transition-all">
-                See My Work
-                <span className="text-xl group-hover:translate-x-2 transition-transform duration-500">→</span>
-              </a>
-            </Magnetic>
-            <Magnetic strength={0.3}>
-              <a href="#contact" className="group flex items-center gap-3 text-xs font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-all">
-                Get in Touch
-                <span className="text-xl group-hover:translate-x-2 transition-transform duration-500">→</span>
+        <Reveal delay={1.2}>
+          <div className="flex justify-center">
+            <Magnetic>
+              <a href="#projects" className="group flex flex-col items-center gap-4 cursor-pointer">
+                <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.4em] group-hover:text-sky-500 transition-colors">Scroll_To_Explore</span>
+                <div className="w-[1px] h-20 bg-gradient-to-b from-sky-500 to-transparent relative overflow-hidden">
+                  <motion.div animate={{ y: [0, 80] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-full h-1/2 bg-white" />
+                </div>
               </a>
             </Magnetic>
           </div>
@@ -448,16 +427,6 @@ const Hero = () => {
     </section>
   );
 };
-
-interface Project {
-  title: string;
-  description: string;
-  tech: string[];
-  link: string;
-  stats: string;
-  images?: string[];
-  isModelOnly?: boolean;
-}
 
 const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: string; isFlipped: boolean }) => {
   const [index, setIndex] = useState(0);
@@ -524,11 +493,20 @@ const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: st
   );
 };
 
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  link: string;
+  stats: string;
+  images?: string[];
+  isModelOnly?: boolean;
+}
+
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = (e: React.MouseEvent) => {
-    // Prevent flipping if clicking the source code link
     if ((e.target as HTMLElement).closest(".source-link")) return;
     setIsFlipped(!isFlipped);
   };
@@ -635,6 +613,14 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 const Projects = () => (
   <section id="projects" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto overflow-visible">
     <SectionHeader title="Selected Work" description="A curated selection of technical implementations and software architecture." />
+    
+    <Reveal delay={0.6} y={10} className="-mt-12 mb-16">
+      <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-sky-500/5 border border-sky-500/10 text-[10px] font-bold text-sky-500 tracking-[0.2em] uppercase">
+        <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
+        Interactive: Click any card to reveal project visuals
+      </div>
+    </Reveal>
+
     <div className="space-y-16">
       {projects.map((project, index) => (
         <ProjectCard key={project.title} project={project} index={index} />
@@ -820,27 +806,67 @@ const GitHubHub = () => {
   );
 };
 
-const Skills = () => (
-  <section id="skills" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto">
-    <SectionHeader title="Expertise" description="Technical analysis of core competencies and engineering toolsets." />
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      {skillsData.map((group, groupIndex) => (
-        <Reveal key={group.category} delay={groupIndex * 0.1}>
-          <TiltCard className="h-full">
-            <div className="glass-card p-10 h-full shadow-2xl">
-              <h3 className="text-[10px] font-bold text-sky-500/50 uppercase tracking-[0.3em] mb-10 border-b border-white/5 pb-6">{group.category}</h3>
-              <div className="space-y-8">
-                {group.skills.map((skill, skillIndex) => (
-                  <SkillItem key={skill.name} skill={skill} index={skillIndex} />
-                ))}
+const Skills = () => {
+  const categoryIcons = {
+    Frontend: () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    ),
+    Backend: () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>
+    ),
+    "Data Visualization": () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+    ),
+    "Deep Learning": () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/></svg>
+    ),
+    Tools: () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    )
+  };
+
+  // Duplicate for infinite loop
+  const duplicatedSkills = [...skillsData, ...skillsData];
+
+  return (
+    <section id="skills" className="py-48 scroll-mt-20 overflow-hidden">
+      <div className="max-w-[90rem] mx-auto px-6">
+        <SectionHeader title="Expertise" description="Technical analysis of core competencies and engineering toolsets." />
+      </div>
+      
+      <div className="relative mt-10 group/slider-container">
+        {/* Gradient Overlays for smooth entry/exit */}
+        <div className="absolute inset-y-0 left-0 w-32 md:w-64 bg-gradient-to-r from-[#09090b] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-32 md:w-64 bg-gradient-to-l from-[#09090b] to-transparent z-10 pointer-events-none" />
+
+        <div className="flex gap-8 w-max px-8 animate-film-roll pause-on-hover">
+          {duplicatedSkills.map((group, groupIndex) => {
+            const CategoryIcon = categoryIcons[group.category as keyof typeof categoryIcons] || (() => null);
+            return (
+              <div key={`${group.category}-${groupIndex}`} className="w-[280px] md:w-[320px] flex-shrink-0">
+                <TiltCard className="h-full">
+                  <div className="glass-card p-7 md:p-8 h-full shadow-2xl bg-zinc-900/40 border border-white/5 hover:border-sky-500/20 transition-colors">
+                    <div className="flex items-center gap-3 mb-8 border-b border-white/5 pb-5">
+                      <div className="w-4 h-4 text-sky-500">
+                        <CategoryIcon />
+                      </div>
+                      <h3 className="text-[10px] font-bold text-white uppercase tracking-[0.2em]">{group.category}</h3>
+                    </div>
+                    <div className="space-y-7">
+                      {group.skills.map((skill, skillIndex) => (
+                        <SkillItem key={skill.name} skill={skill} index={skillIndex} />
+                      ))}
+                    </div>
+                  </div>
+                </TiltCard>
               </div>
-            </div>
-          </TiltCard>
-        </Reveal>
-      ))}
-    </div>
-  </section>
-);
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const Education = () => (
   <section id="education" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto">
@@ -866,7 +892,9 @@ const Education = () => (
               {completedSGPAs.map((sem) => (
                 <div key={sem.semester} className="space-y-1">
                   <div className="text-[9px] font-bold text-zinc-600 uppercase tracking-tighter">{sem.semester}</div>
-                  <div className="text-xl font-bold text-white/80 hover:text-sky-400 transition-colors cursor-default">{sem.sgpa.toFixed(3)}</div>
+                  <div className="text-xl font-bold text-white/80 hover:text-sky-400 transition-colors cursor-default">
+                    {typeof sem.sgpa === 'number' ? sem.sgpa.toFixed(3) : "TBD"}
+                  </div>
                 </div>
               ))}
             </div>
