@@ -97,10 +97,11 @@ const SectionHeader = ({ title, description }: { title: string; description: str
         {description}
       </motion.p>
       <motion.div 
-        initial={{ width: 0 }}
-        whileInView={{ width: 64, md: 96 }}
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        style={{ originX: 0 }}
         transition={{ duration: 1.2, delay: 1 }}
-        className="h-[1px] bg-zinc-800 mt-6 md:mt-8" 
+        className="h-[1px] bg-zinc-800 mt-6 md:mt-8 w-16 md:w-24" 
       />
     </motion.header>
   );
