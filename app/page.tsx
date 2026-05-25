@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 // --- Icons (Refined SVGs) ---
@@ -231,32 +231,56 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
 
 const projects = [
   {
+    title: "PathFinder : A Career Councelling Assistant",
+    description: "This is a comprehensive full-stack career counseling platform that integrates AI-driven chat guidance with automated resume parsing to provide personalized professional roadmaps and profile management.",
+    tech : ["Python", "FastAPI", "SQLAlchemy", "SQLite (aiosqlite)", "OpenRouter (for Llama models)", "LM Studio (for local LLMs)", "HuggingFace (Transformers/Accelerate)", "PyMuPDF/pdfplumber",     "React", "Vite", "Tailwind CSS", "Mermaid.js"],
+    link : "https://github.com/dkadian/career-assistant",
+    stats : "Context-Aware Chat",
+    images: [
+      "/project-images/pathfinder/1.png",
+      "/project-images/pathfinder/2.png",
+      "/project-images/pathfinder/3.png"
+    ]
+  },
+  {
     title: "web-portfolio",
     description: "A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases my skills, projects, education, and provides a way to connect with me.",
     tech: ["TypeScript", "Tailwind CSS", "Next.js"],
     link: "https://github.com/dkadian/web-portfolio",
-    stats: "v1.2.0"
+    stats: "v1.2.0",
+    images: [
+      "/project-images/web-portfolio/1.png",
+      "/project-images/web-portfolio/2.png",
+      "/project-images/web-portfolio/3.png"
+    ]
   },
   {
     title: "Dogs_cats_recog",
     description: "This repository implements a Support Vector Machine (SVM) classifier in Python to classify images of cats and dogs from the popular Kaggle Cats vs Dogs dataset.",
     tech: ["Python", "SVM", "Scikit-Learn"],
     link: "https://github.com/dkadian/Dogs_cats_recog",
-    stats: "94% Acc"
+    stats: "94% Acc",
+    images: [
+      "/project-images/dogs-cats/1.png",
+      "/project-images/dogs-cats/2.png",
+      "/project-images/dogs-cats/3.png"
+    ]
   },
   {
     title: "House_pricing",
     description: "The code aims to build and evaluate linear regression models to predict house prices (SalePrice) based on their square footage and number of bedrooms and bathrooms.",
     tech: ["Python", "Linear Regression", "Pandas"],
     link: "https://github.com/dkadian/House_pricing",
-    stats: "ML Model"
+    stats: "ML Model",
+    isModelOnly: true
   },
   {
     title: "Hand_gesture_recog.",
     description: "Hand gesture recognition is a crucial component of human-computer interaction. This project aims to build a deep learning model capable of recognizing different hand gestures in real-time.",
     tech: ["Python", "Deep Learning", "OpenCV"],
     link: "https://github.com/dkadian/Hand_gesture_recog.",
-    stats: "Real-time"
+    stats: "Real-time",
+    isModelOnly: true
   },
 ];
 
@@ -320,11 +344,16 @@ const Hero = () => {
                 <motion.div 
                   className="relative w-full h-full"
                   animate={{ rotateY: isFlipped ? 180 : 0 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   {/* Front Side: Unknown.jpg */}
-                  <div className="absolute inset-0" style={{ backfaceVisibility: "hidden" }}>
+                  <motion.div 
+                    className="absolute inset-0" 
+                    style={{ backfaceVisibility: "hidden" }}
+                    animate={{ opacity: isFlipped ? 0 : 1 }}
+                    transition={{ duration: 0.4, delay: isFlipped ? 0 : 0.2 }}
+                  >
                     <div className="relative w-full h-full grayscale transition-all duration-1000 ease-out overflow-hidden border border-zinc-800 rounded-2xl shadow-2xl bg-zinc-900/50 p-2">
                       <div className="relative w-full h-full overflow-hidden rounded-xl">
                         <Image 
@@ -336,10 +365,15 @@ const Hero = () => {
                         />
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
 
                   {/* Back Side: profile.jpeg */}
-                  <div className="absolute inset-0" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+                  <motion.div 
+                    className="absolute inset-0" 
+                    style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                    animate={{ opacity: isFlipped ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
+                  >
                     <div className="relative w-full h-full transition-all duration-1000 ease-out overflow-hidden border border-zinc-800 rounded-2xl shadow-2xl bg-zinc-900/50 p-2">
                       <div className="relative w-full h-full overflow-hidden rounded-xl">
                         <Image 
@@ -351,7 +385,7 @@ const Hero = () => {
                         />
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
 
                 {/* Reveal Toggle Button - Extremely Minimal */}
@@ -415,17 +449,110 @@ const Hero = () => {
   );
 };
 
-const Projects = () => (
-  <section id="projects" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto overflow-visible">
-    <SectionHeader title="Selected Work" description="A curated selection of technical implementations and software architecture." />
-    <div className="space-y-16">
-      {projects.map((project, index) => (
-        <Reveal key={project.title} delay={index * 0.1}>
-          <div className="p-4"> {/* Breathing room for 3D Tilt */}
-            <TiltCard className="h-full">
-              <div className="glass-card group h-full shadow-2xl relative overflow-visible">
-                {/* Internal container to enforce rounded corners without breaking 3D context of the TiltCard */}
-                <div className="relative z-10 h-full overflow-hidden rounded-[inherit] flex flex-col justify-between p-10 md:p-16">
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  link: string;
+  stats: string;
+  images?: string[];
+  isModelOnly?: boolean;
+}
+
+const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: string; isFlipped: boolean }) => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!isFlipped) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [images.length, isFlipped]);
+
+  const paginate = (newDirection: number) => {
+    setIndex((prev) => (prev + newDirection + images.length) % images.length);
+  };
+
+  return (
+    <div className="relative w-full h-full group/slider overflow-hidden rounded-2xl border border-white/10 bg-zinc-900">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={index}
+          initial={{ y: 300, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -300, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="absolute inset-0"
+        >
+          <Image 
+            src={images[index]} 
+            alt={`${title} view ${index + 1}`} 
+            fill 
+            sizes="(max-width: 768px) 100vw, 800px"
+            className="object-cover"
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Manual Controls */}
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-500 z-20">
+        <button 
+          onClick={(e) => { e.stopPropagation(); paginate(-1); }}
+          className="w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors"
+        >
+          ↑
+        </button>
+        <button 
+          onClick={(e) => { e.stopPropagation(); paginate(1); }}
+          className="w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors"
+        >
+          ↓
+        </button>
+      </div>
+
+      {/* Indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        {images.map((_, i) => (
+          <div 
+            key={i} 
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${i === index ? "bg-sky-500 w-4" : "bg-white/20"}`} 
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleClick = (e: React.MouseEvent) => {
+    // Prevent flipping if clicking the source code link
+    if ((e.target as HTMLElement).closest(".source-link")) return;
+    setIsFlipped(!isFlipped);
+  };
+
+  return (
+    <Reveal delay={index * 0.1}>
+      <div className="p-4 cursor-pointer" onClick={handleClick}>
+        <div className="relative h-[500px] md:h-[600px] w-full perspective-1000">
+          <motion.div
+            className="relative w-full h-full"
+            initial={false}
+            animate={{ rotateY: isFlipped ? 180 : 0 }}
+            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {/* Front Side */}
+            <motion.div 
+              className="absolute inset-0 w-full h-full" 
+              style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+              animate={{ opacity: isFlipped ? 0 : 1 }}
+              transition={{ duration: 0.4, delay: isFlipped ? 0 : 0.2 }}
+            >
+              <div className="glass-card group h-full shadow-2xl relative overflow-hidden bg-zinc-950">
+                <div className="relative z-10 h-full flex flex-col justify-between p-10 md:p-16">
                   <div className="space-y-12">
                     <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                       <div className="space-y-4">
@@ -444,16 +571,73 @@ const Projects = () => (
                         <span key={t} className="text-[11px] font-bold text-zinc-600 uppercase tracking-widest border border-white/5 px-4 py-2 rounded-xl bg-white/[0.02]">{t}</span>
                       ))}
                     </div>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="group/link inline-flex items-center gap-4 text-xs font-bold text-white hover:text-sky-400 transition-all uppercase tracking-[0.3em]">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="source-link group/link inline-flex items-center gap-4 text-xs font-bold text-white hover:text-sky-400 transition-all uppercase tracking-[0.3em]">
                       Access_Source_Code
                       <span className="text-2xl group-hover/link:translate-x-2 transition-transform">→</span>
                     </a>
                   </div>
                 </div>
               </div>
-            </TiltCard>
-          </div>
-        </Reveal>
+            </motion.div>
+
+            {/* Back Side */}
+            <motion.div 
+              className="absolute inset-0 w-full h-full" 
+              style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+              animate={{ opacity: isFlipped ? 1 : 0 }}
+              transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
+            >
+              <div className="glass-card h-full shadow-2xl relative overflow-hidden rounded-[2.5rem] bg-zinc-950 border border-white/5">
+                <div className="relative z-10 h-full flex flex-col p-8">
+                  <div className="flex justify-between items-center mb-8">
+                    <h3 className="text-xl font-bold text-white uppercase tracking-tighter">Project Visuals</h3>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setIsFlipped(false); }}
+                      className="text-zinc-500 hover:text-white transition-colors"
+                    >
+                      Close ×
+                    </button>
+                  </div>
+                  
+                  <div className="flex-1 min-h-0">
+                    {project.images && project.images.length > 0 ? (
+                      <ImageSlider images={project.images} title={project.title} isFlipped={isFlipped} />
+                    ) : project.isModelOnly ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center space-y-8">
+                        <div className="w-20 h-20 rounded-full bg-sky-500/10 flex items-center justify-center border border-sky-500/20">
+                          <span className="text-4xl">🤖</span>
+                        </div>
+                        <div className="space-y-4">
+                          <h4 className="text-2xl font-bold text-white uppercase tracking-tight">Model Analysis Only</h4>
+                          <p className="text-zinc-500 max-w-xs mx-auto">This project focuses on the core machine learning model and architectural implementation rather than a visual frontend.</p>
+                        </div>
+                        <a 
+                          href={project.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="source-link px-8 py-4 bg-white text-black rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-sky-400 hover:text-white transition-all"
+                        >
+                          View Model Source
+                        </a>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+    </Reveal>
+  );
+};
+
+const Projects = () => (
+  <section id="projects" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto overflow-visible">
+    <SectionHeader title="Selected Work" description="A curated selection of technical implementations and software architecture." />
+    <div className="space-y-16">
+      {projects.map((project, index) => (
+        <ProjectCard key={project.title} project={project} index={index} />
       ))}
     </div>
   </section>
