@@ -28,17 +28,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${plusJakarta.variable} ${signature.variable} antialiased bg-[#09090b] text-[#fafafa] selection:bg-sky-500/20 cursor-none`}
+        className={`${plusJakarta.variable} ${signature.variable} antialiased bg-[#09090b] text-[#fafafa] selection:bg-sky-500/20 md:cursor-none overflow-x-hidden`}
       >
         <ParticleBackground />
-        <CustomCursor />
+        <div className="hidden md:block">
+          <CustomCursor />
+        </div>
         <Navigation />
-        <div className="min-h-screen pt-32 pb-12 px-6 max-w-5xl mx-auto overflow-x-hidden">
+        <main className="min-h-screen pt-20 md:pt-32 pb-12 px-6 max-w-5xl mx-auto overflow-x-hidden">
           {children}
           <Footer />
-        </div>
+        </main>
       </body>
     </html>
   );

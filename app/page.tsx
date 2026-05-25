@@ -79,11 +79,11 @@ const SectionHeader = ({ title, description }: { title: string; description: str
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="space-y-4 mb-24 max-w-2xl"
+      className="space-y-4 mb-16 md:mb-24 max-w-2xl"
     >
       <motion.h2 className="text-3xl md:text-5xl font-bold text-white tracking-tighter uppercase leading-none">
         {words.map((word, i) => (
-          <span key={i} className="inline-block mr-3">
+          <span key={i} className="inline-block mr-2 md:mr-3">
             {word}
           </span>
         ))}
@@ -92,15 +92,15 @@ const SectionHeader = ({ title, description }: { title: string; description: str
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
-        className="text-zinc-500 text-base md:text-lg font-light leading-relaxed"
+        className="text-zinc-500 text-sm md:text-lg font-light leading-relaxed"
       >
         {description}
       </motion.p>
       <motion.div 
         initial={{ width: 0 }}
-        whileInView={{ width: 96 }}
+        whileInView={{ width: 64, md: 96 }}
         transition={{ duration: 1.2, delay: 1 }}
-        className="h-[1px] bg-zinc-800 mt-8" 
+        className="h-[1px] bg-zinc-800 mt-6 md:mt-8" 
       />
     </motion.header>
   );
@@ -110,7 +110,7 @@ const Reveal = ({ children, delay = 0, y = 20, className = "" }: { children: Rea
   <motion.div
     initial={{ opacity: 0, y }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
+    viewport={{ once: true, margin: "-20px" }}
     transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
     className={className}
   >
@@ -141,11 +141,11 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group space-y-3"
+      className="group space-y-2 md:space-y-3"
     >
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className={`w-5 h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className={`w-4 h-4 md:w-5 md:h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
             <Image 
               src={logoPath} 
               alt={`${skill.name} logo`} 
@@ -158,11 +158,11 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
               }}
             />
           </div>
-          <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">{skill.name}</span>
+          <span className="text-[10px] md:text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">{skill.name}</span>
         </div>
-        <span className="text-[10px] font-mono text-zinc-500">{skill.level}%</span>
+        <span className="text-[8px] md:text-[10px] font-mono text-zinc-500">{skill.level}%</span>
       </div>
-      <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
+      <div className="h-0.5 md:h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
         <motion.div 
           initial={{ width: 0 }}
           whileInView={{ width: `${skill.level}%` }}
@@ -317,23 +317,23 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center py-32 max-w-7xl mx-auto px-6 text-center">
+    <section id="home" className="relative min-h-[90vh] md:min-h-screen flex flex-col items-center justify-center py-20 md:py-32 text-center">
       {/* Theme Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sky-500/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -z-10" />
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }} className="relative z-10 space-y-20">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }} className="relative z-10 space-y-12 md:space-y-20">
         <Reveal delay={0.2} y={10}>
-          <div className="flex items-center justify-center gap-4 text-zinc-500 font-medium text-sm tracking-tight">
-            <span className="w-8 h-[1px] bg-zinc-800" />
+          <div className="flex items-center justify-center gap-4 text-zinc-500 font-medium text-[10px] md:text-sm tracking-tight">
+            <span className="w-4 md:w-8 h-[1px] bg-zinc-800" />
             BASED IN GURUGRAM, IN // 2026
-            <span className="w-8 h-[1px] bg-zinc-800" />
+            <span className="w-4 md:w-8 h-[1px] bg-zinc-800" />
           </div>
         </Reveal>
 
-        <div className="flex flex-col items-center gap-12">
+        <div className="flex flex-col items-center gap-8 md:gap-12">
           <Reveal delay={0.4}>
             <TiltCard>
-              <div className="relative w-56 h-56 md:w-72 md:h-72 group perspective-1000">
+              <div className="relative w-48 h-48 md:w-72 md:h-72 group perspective-1000">
                 <motion.div 
                   className="relative w-full h-full"
                   animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -444,48 +444,51 @@ const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: st
   };
 
   return (
-    <div className="relative w-full h-full group/slider overflow-hidden rounded-2xl border border-white/10 bg-zinc-900">
+    <div className="relative w-full h-full group/slider overflow-hidden rounded-xl md:rounded-2xl border border-white/10 bg-zinc-900/50">
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
-          initial={{ y: 300, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -300, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="absolute inset-0"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          className="absolute inset-0 p-2 md:p-4"
         >
-          <Image 
-            src={images[index]} 
-            alt={`${title} view ${index + 1}`} 
-            fill 
-            sizes="(max-width: 768px) 100vw, 800px"
-            className="object-cover"
-          />
+          <div className="relative w-full h-full overflow-hidden rounded-lg">
+            <Image 
+              src={images[index]} 
+              alt={`${title} view ${index + 1}`} 
+              fill 
+              sizes="(max-width: 768px) 100vw, 800px"
+              className="object-contain"
+              priority={index === 0}
+            />
+          </div>
         </motion.div>
       </AnimatePresence>
 
       {/* Manual Controls */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-500 z-20">
+      <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 md:gap-4 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-500 z-20">
         <button 
           onClick={(e) => { e.stopPropagation(); paginate(-1); }}
-          className="w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors"
+          className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors text-sm md:text-base"
         >
           ↑
         </button>
         <button 
           onClick={(e) => { e.stopPropagation(); paginate(1); }}
-          className="w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors"
+          className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors text-sm md:text-base"
         >
           ↓
         </button>
       </div>
 
       {/* Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2 z-20">
         {images.map((_, i) => (
           <div 
             key={i} 
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${i === index ? "bg-sky-500 w-4" : "bg-white/20"}`} 
+            className={`w-1 md:w-1.5 h-1 md:h-1.5 rounded-full transition-all duration-500 ${i === index ? "bg-sky-500 w-3 md:w-4" : "bg-white/20"}`} 
           />
         ))}
       </div>
@@ -514,7 +517,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   return (
     <Reveal delay={index * 0.1}>
       <div className="p-4 cursor-pointer" onClick={handleClick}>
-        <div className="relative h-[500px] md:h-[600px] w-full perspective-1000">
+        <div className="relative h-[550px] md:h-[600px] w-full perspective-1000">
           <motion.div
             className="relative w-full h-full"
             initial={false}
@@ -530,28 +533,28 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
               transition={{ duration: 0.4, delay: isFlipped ? 0 : 0.2 }}
             >
               <div className="glass-card group h-full shadow-2xl relative overflow-hidden bg-zinc-950">
-                <div className="relative z-10 h-full flex flex-col justify-between p-10 md:p-16">
-                  <div className="space-y-12">
-                    <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-                      <div className="space-y-4">
+                <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-16">
+                  <div className="space-y-4 md:space-y-12">
+                    <div className="flex flex-col md:flex-row justify-between items-start gap-3 md:gap-8">
+                      <div className="space-y-1 md:space-y-4">
                         <span className="text-[10px] font-bold text-sky-500/50 uppercase tracking-[0.2em]">Project_0{index + 1}</span>
-                        <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white group-hover:text-sky-400 transition-colors duration-500 uppercase tracking-tighter leading-[1.1] break-words">
+                        <h3 className="text-xl md:text-4xl lg:text-5xl font-bold text-white group-hover:text-sky-400 transition-colors duration-500 uppercase tracking-tighter leading-[1.1] break-words">
                           {project.title.replace(/_/g, " ")}
                         </h3>
                       </div>
-                      <span className="glass-pill px-4 py-2 text-[10px]">{project.stats}</span>
+                      <span className="glass-pill px-3 py-1 md:px-4 md:py-2 text-[8px] md:text-[10px]">{project.stats}</span>
                     </div>
-                    <p className="text-zinc-400 text-lg md:text-xl font-light leading-relaxed tracking-tight max-w-3xl group-hover:text-zinc-300 transition-colors">{project.description}</p>
+                    <p className="text-zinc-400 text-xs md:text-xl font-light leading-relaxed tracking-tight max-w-3xl group-hover:text-zinc-300 transition-colors line-clamp-4 md:line-clamp-none">{project.description}</p>
                   </div>
-                  <div className="space-y-12 pt-16 mt-auto">
-                    <div className="flex flex-wrap gap-3">
+                  <div className="space-y-6 md:space-y-12 pt-4 md:pt-16 mt-auto">
+                    <div className="flex flex-wrap gap-1.5 md:gap-3">
                       {project.tech.map((t) => (
-                        <span key={t} className="text-[11px] font-bold text-zinc-600 uppercase tracking-widest border border-white/5 px-4 py-2 rounded-xl bg-white/[0.02]">{t}</span>
+                        <span key={t} className="text-[8px] md:text-[11px] font-bold text-zinc-600 uppercase tracking-widest border border-white/5 px-2 py-1 md:px-4 md:py-2 rounded-lg md:rounded-xl bg-white/[0.02]">{t}</span>
                       ))}
                     </div>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="source-link group/link inline-flex items-center gap-4 text-xs font-bold text-white hover:text-sky-400 transition-all uppercase tracking-[0.3em]">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="source-link group/link inline-flex items-center gap-3 md:gap-4 text-[10px] md:text-xs font-bold text-white hover:text-sky-400 transition-all uppercase tracking-[0.3em]">
                       Access_Source_Code
-                      <span className="text-2xl group-hover/link:translate-x-2 transition-transform">→</span>
+                      <span className="text-xl md:text-2xl group-hover/link:translate-x-2 transition-transform">→</span>
                     </a>
                   </div>
                 </div>
@@ -565,13 +568,13 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
               animate={{ opacity: isFlipped ? 1 : 0 }}
               transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
             >
-              <div className="glass-card h-full shadow-2xl relative overflow-hidden rounded-[2.5rem] bg-zinc-950 border border-white/5">
-                <div className="relative z-10 h-full flex flex-col p-8">
-                  <div className="flex justify-between items-center mb-8">
-                    <h3 className="text-xl font-bold text-white uppercase tracking-tighter">Project Visuals</h3>
+              <div className="glass-card h-full shadow-2xl relative overflow-hidden bg-zinc-950">
+                <div className="relative z-10 h-full flex flex-col p-4 md:p-8">
+                  <div className="flex justify-between items-center mb-4 md:mb-8">
+                    <h3 className="text-sm md:text-xl font-bold text-white uppercase tracking-tighter">Project Visuals</h3>
                     <button 
                       onClick={(e) => { e.stopPropagation(); setIsFlipped(false); }}
-                      className="text-zinc-500 hover:text-white transition-colors"
+                      className="text-zinc-500 hover:text-white transition-colors p-2"
                     >
                       Close ×
                     </button>
@@ -611,7 +614,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 };
 
 const Projects = () => (
-  <section id="projects" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto overflow-visible">
+  <section id="projects" className="py-48 scroll-mt-20 overflow-visible">
     <SectionHeader title="Selected Work" description="A curated selection of technical implementations and software architecture." />
     
     <Reveal delay={0.6} y={10} className="-mt-12 mb-16">
@@ -675,32 +678,32 @@ const GitHubHub = () => {
   ];
 
   return (
-    <section id="activity" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto">
+    <section id="activity" className="py-24 md:py-48 scroll-mt-20">
       <SectionHeader title="Contribution Graph" description="Real-time pulse of my technical development cycles and architectural consistency." />
       
-      <div className="space-y-12">
+      <div className="space-y-8 md:space-y-12">
         <Reveal>
           <TiltCard>
-            <div className="glass-card p-10 md:p-14 space-y-12 shadow-2xl">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-white/5 pb-10">
+            <div className="glass-card p-6 md:p-14 space-y-8 md:space-y-12 shadow-2xl">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8 border-b border-white/5 pb-8 md:pb-10">
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-bold text-white tracking-tighter uppercase">Activity_Index</h3>
-                  <p className="text-zinc-500 text-sm font-light">
+                  <h3 className="text-xl md:text-2xl font-bold text-white tracking-tighter uppercase">Activity_Index</h3>
+                  <p className="text-zinc-500 text-xs md:text-sm font-light">
                     {error ? <span className="text-red-400/80">ERROR: {error}</span> : "Direct synchronization with GitHub Technical Systems."}
                   </p>
                 </div>
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${error ? "bg-red-500/10 border-red-500/20 text-red-500" : "bg-emerald-500/5 border-emerald-500/10 text-emerald-500"} text-[9px] font-bold tracking-widest uppercase`}>
+                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${error ? "bg-red-500/10 border-red-500/20 text-red-500" : "bg-emerald-500/5 border-emerald-500/10 text-emerald-500"} text-[8px] md:text-[9px] font-bold tracking-widest uppercase w-fit`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${error ? "bg-red-500" : "bg-emerald-500 animate-pulse"}`} />
                   {error ? "Sync_Failed" : "Live_Sync_Enabled"}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 pb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 pb-4">
                 {stats.map((stat) => (
-                  <div key={stat.label} className="space-y-2">
-                    <div className="text-zinc-600 text-[10px] font-bold uppercase tracking-widest">{stat.label}</div>
-                    <div className="text-3xl font-bold text-white flex items-center gap-3">
-                      <span className="text-lg opacity-30">{stat.icon}</span>
+                  <div key={stat.label} className="space-y-1 md:space-y-2">
+                    <div className="text-zinc-600 text-[8px] md:text-[10px] font-bold uppercase tracking-widest">{stat.label}</div>
+                    <div className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+                      <span className="text-base md:text-lg opacity-30">{stat.icon}</span>
                       {stat.value}
                     </div>
                   </div>
@@ -722,23 +725,24 @@ const GitHubHub = () => {
                   </div>
                 </div>
 
-                <div className="overflow-x-auto pb-6 custom-scrollbar">
-                  <div className="inline-flex flex-col gap-2 min-w-full p-2">
+                <div className="overflow-x-auto pb-6 custom-scrollbar -mx-2 px-2">
+                  <div className="inline-flex flex-col gap-3 min-w-max">
                     {loading ? (
-                      <div className="h-32 w-full bg-white/[0.02] animate-pulse rounded-2xl flex items-center justify-center text-[10px] font-bold text-zinc-700 tracking-[0.5em] uppercase">Initialising_Data_Link...</div>
+                      <div className="h-32 w-[800px] bg-white/[0.02] animate-pulse rounded-2xl flex items-center justify-center text-[10px] font-bold text-zinc-700 tracking-[0.5em] uppercase">Initialising_Data_Link...</div>
                     ) : error ? (
                       <div className="h-32 w-full border border-dashed border-red-500/20 rounded-2xl flex items-center justify-center text-[10px] font-bold text-red-500/50 tracking-[0.5em] uppercase">Connection_Interrupted</div>
                     ) : (
                       <>
                         {/* Month Labels Row */}
-                        <div className="flex gap-[3px]">
+                        <div className="flex gap-[3px] h-4">
                           {calendar?.weeks?.map((week: GitHubContributionWeek, i: number) => {
                             const firstDay = new Date(week.contributionDays[0].date);
+                            // Month labels usually appear if it's the first week of the month
                             const isFirstWeekOfMonth = firstDay.getDate() <= 7;
                             return (
-                              <div key={i} className="w-[12px] h-3 flex-shrink-0">
+                              <div key={i} className="w-[12px] flex-shrink-0 relative">
                                 {isFirstWeekOfMonth && (
-                                  <span className="text-[8px] font-bold text-zinc-600 uppercase whitespace-nowrap">
+                                  <span className="absolute left-0 top-0 text-[8px] font-bold text-zinc-600 uppercase whitespace-nowrap">
                                     {firstDay.toLocaleString('default', { month: 'short' })}
                                   </span>
                                 )}
@@ -869,30 +873,30 @@ const Skills = () => {
 };
 
 const Education = () => (
-  <section id="education" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto">
+  <section id="education" className="py-24 md:py-48 scroll-mt-20">
     <SectionHeader title="Education" description="Academic development and performance metrics during my engineering degree." />
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
       <Reveal>
         <TiltCard className="h-full">
-          <div className="glass-card p-10 md:p-12 space-y-16 h-full shadow-2xl">
-            <div className="space-y-8">
-              <div className="flex flex-col md:flex-row justify-between items-start gap-8 border-b border-white/5 pb-8 hover:border-sky-500/30 transition-colors duration-700">
+          <div className="glass-card p-6 md:p-12 space-y-12 md:space-y-16 h-full shadow-2xl">
+            <div className="space-y-6 md:space-y-8">
+              <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 border-b border-white/5 pb-6 md:pb-8 hover:border-sky-500/30 transition-colors duration-700">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">2023 — 2027</span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight text-balance">B.Tech in Computer Science</h3>
-                  <p className="text-zinc-500 text-sm font-light italic">Sushant University • School of Engineering</p>
+                  <span className="text-[8px] md:text-[10px] font-bold text-zinc-500 uppercase tracking-widest">2023 — 2027</span>
+                  <h3 className="text-xl md:text-3xl font-bold text-white uppercase tracking-tight text-balance">B.Tech in Computer Science</h3>
+                  <p className="text-zinc-500 text-xs md:text-sm font-light italic">Sushant University • School of Engineering</p>
                 </div>
-                <div className="text-right">
-                  <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest">CGPA_Index</span>
-                  <div className="text-4xl font-bold text-white">{cgpa}</div>
+                <div className="text-left">
+                  <span className="text-[8px] md:text-[9px] font-bold text-zinc-600 uppercase tracking-widest">CGPA_Index</span>
+                  <div className="text-3xl md:text-4xl font-bold text-white">{cgpa}</div>
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 md:gap-8">
               {completedSGPAs.map((sem) => (
                 <div key={sem.semester} className="space-y-1">
-                  <div className="text-[9px] font-bold text-zinc-600 uppercase tracking-tighter">{sem.semester}</div>
-                  <div className="text-xl font-bold text-white/80 hover:text-sky-400 transition-colors cursor-default">
+                  <div className="text-[8px] md:text-[9px] font-bold text-zinc-600 uppercase tracking-tighter">{sem.semester}</div>
+                  <div className="text-lg md:text-xl font-bold text-white/80 hover:text-sky-400 transition-colors cursor-default">
                     {typeof sem.sgpa === 'number' ? sem.sgpa.toFixed(3) : "TBD"}
                   </div>
                 </div>
@@ -901,21 +905,21 @@ const Education = () => (
           </div>
         </TiltCard>
       </Reveal>
-      <div className="space-y-8">
+      <div className="space-y-6 md:space-y-8">
         {[
           { title: "Class 12", school: "GBSSS, Dharampura", result: "80%", year: "2022", delay: 0.15 },
           { title: "Class 10", school: "Krishna Model School", result: "84%", year: "2020", delay: 0.25 }
         ].map((item) => (
           <Reveal key={item.title} delay={item.delay}>
             <TiltCard>
-              <div className="glass-card p-10 space-y-6 hover:translate-x-1 transition-all duration-700 shadow-2xl">
+              <div className="glass-card p-6 md:p-10 space-y-4 md:space-y-6 hover:translate-x-1 transition-all duration-700 shadow-2xl">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-bold text-sky-500/50 uppercase tracking-widest">{`${item.year} // ${item.title}`}</span>
+                  <span className="text-[8px] md:text-[10px] font-bold text-sky-500/50 uppercase tracking-widest">{`${item.year} // ${item.title}`}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white leading-tight uppercase tracking-tight mb-4">{item.school}</h3>
-                <div className="flex justify-between items-end border-t border-white/5 pt-6 mt-6">
-                  <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest">Result_Index</span>
-                  <span className="text-white font-bold text-2xl font-mono">{item.result}</span>
+                <h3 className="text-lg md:text-xl font-bold text-white leading-tight uppercase tracking-tight mb-2 md:mb-4">{item.school}</h3>
+                <div className="flex justify-between items-end border-t border-white/5 pt-4 md:pt-6 mt-4 md:mt-6">
+                  <span className="text-[8px] md:text-[9px] font-bold text-zinc-600 uppercase tracking-widest">Result_Index</span>
+                  <span className="text-white font-bold text-xl md:text-2xl font-mono">{item.result}</span>
                 </div>
               </div>
             </TiltCard>
@@ -934,16 +938,16 @@ const CV = () => {
     setTimeout(() => setIsDownloading(false), 2000);
   };
   return (
-    <section id="cv" className="py-32 scroll-mt-20 px-6 max-w-5xl mx-auto">
+    <section id="cv" className="py-24 md:py-32 scroll-mt-20">
       <Reveal>
         <TiltCard>
-          <div className="glass-card p-10 md:p-20 flex flex-col items-center text-center relative group overflow-hidden shadow-2xl">
-            <div className="relative z-10 space-y-10">
-              <div className="font-mono text-zinc-500 text-[10px] tracking-[1em] uppercase opacity-50">Documentation</div>
-              <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter uppercase leading-tight">Curriculum <br /> Vitae</h2>
-              <p className="text-zinc-500 text-sm md:text-base font-light max-w-lg mx-auto tracking-tight opacity-80">Access technical documentation of professional trajectory and academic mastery.</p>
+          <div className="glass-card p-8 md:p-20 flex flex-col items-center text-center relative group overflow-hidden shadow-2xl">
+            <div className="relative z-10 space-y-8 md:space-y-10">
+              <div className="font-mono text-zinc-500 text-[8px] md:text-[10px] tracking-[1em] uppercase opacity-50">Documentation</div>
+              <h2 className="text-3xl md:text-6xl font-bold text-white tracking-tighter uppercase leading-tight">Curriculum <br /> Vitae</h2>
+              <p className="text-zinc-500 text-xs md:text-base font-light max-w-lg mx-auto tracking-tight opacity-80">Access technical documentation of professional trajectory and academic mastery.</p>
               <Magnetic>
-                <button onClick={handleDownload} disabled={isDownloading} className="px-12 py-5 border border-white/10 hover:bg-white hover:text-black transition-all duration-700 text-[10px] font-bold tracking-[0.4em] disabled:opacity-50 uppercase rounded-xl shadow-2xl">
+                <button onClick={handleDownload} disabled={isDownloading} className="px-8 py-4 md:px-12 md:py-5 border border-white/10 hover:bg-white hover:text-black transition-all duration-700 text-[8px] md:text-[10px] font-bold tracking-[0.4em] disabled:opacity-50 uppercase rounded-xl shadow-2xl">
                   {isDownloading ? "Downloading..." : "Download_Fetch"}
                 </button>
               </Magnetic>
@@ -957,25 +961,25 @@ const CV = () => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-48 scroll-mt-20 px-6 max-w-7xl mx-auto">
+    <section id="contact" className="py-24 md:py-48 scroll-mt-20">
       <SectionHeader title="Contact" description="Establish a connection for technical inquiries or collaborations." />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
         <Reveal>
           <TiltCard className="h-full">
-            <div className="glass-card p-12 md:p-16 h-full flex flex-col justify-center space-y-12 shadow-2xl">
+            <div className="glass-card p-8 md:p-16 h-full flex flex-col justify-center space-y-8 md:space-y-12 shadow-2xl">
               <div className="space-y-4">
-                <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight uppercase leading-tight">Module currently <br /> undergoing <br /> optimization.</h3>
-                <p className="text-zinc-500 text-lg font-light tracking-tight max-w-md">Our direct communication gateway is temporarily offline for architectural enhancements.</p>
+                <h3 className="text-3xl md:text-5xl font-bold text-white tracking-tight uppercase leading-tight">Module currently <br /> undergoing <br /> optimization.</h3>
+                <p className="text-zinc-500 text-base md:text-lg font-light tracking-tight max-w-md">Our direct communication gateway is temporarily offline for architectural enhancements.</p>
               </div>
-              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-sky-500/5 border border-sky-500/10 text-[9px] font-bold text-sky-500 tracking-widest uppercase w-fit">
+              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-sky-500/5 border border-sky-500/10 text-[8px] md:text-[9px] font-bold text-sky-500 tracking-widest uppercase w-fit">
                 <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
                 Establishing Link
               </div>
             </div>
           </TiltCard>
         </Reveal>
-        <div className="space-y-8">
-          <div className="grid gap-6">
+        <div className="space-y-6 md:space-y-8">
+          <div className="grid gap-4 md:gap-6">
             {[
               { label: "Email_Primary", value: "deepakkadian581@gmail.com", href: "mailto:deepakkadian581@gmail.com" },
               { label: "Github_Source", value: "dkadian", href: "https://github.com/dkadian" },
@@ -983,12 +987,12 @@ const Contact = () => {
             ].map((node) => (
               <Reveal key={node.label}>
                 <Magnetic strength={0.1}>
-                  <a href={node.href} target="_blank" className="glass-card group p-8 flex justify-between items-center hover:translate-x-1 transition-all duration-500 shadow-2xl">
+                  <a href={node.href} target="_blank" className="glass-card group p-6 md:p-8 flex justify-between items-center hover:translate-x-1 transition-all duration-500 shadow-2xl">
                     <div className="space-y-1">
-                      <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">{node.label}</div>
-                      <div className="text-lg font-bold text-zinc-300 group-hover:text-white transition-colors">{node.value}</div>
+                      <div className="text-[8px] md:text-[9px] font-bold text-zinc-500 uppercase tracking-widest">{node.label}</div>
+                      <div className="text-base md:text-lg font-bold text-zinc-300 group-hover:text-white transition-colors">{node.value}</div>
                     </div>
-                    <span className="text-2xl text-zinc-800 group-hover:text-sky-500 transition-all duration-700">→</span>
+                    <span className="text-xl md:text-2xl text-zinc-800 group-hover:text-sky-500 transition-all duration-700">→</span>
                   </a>
                 </Magnetic>
               </Reveal>
