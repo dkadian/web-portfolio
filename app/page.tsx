@@ -823,8 +823,10 @@ const GitHubHub = () => {
 const Skills = () => {
   const [isPaused, setIsPaused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef(0);
   const velocityRef = useRef(0.5);
   const targetVelocityRef = useRef(0.5);
+  const lastTimeRef = useRef<number>(0);
 
   const categoryIcons = {
     Frontend: () => (
@@ -848,27 +850,36 @@ const Skills = () => {
   const duplicatedSkills = [...skillsData, ...skillsData];
 
   useEffect(() => {
-    targetVelocityRef.current = isPaused ? 0 : 0.5;
+    targetVelocityRef.current = isPaused ? 0 : 0.6;
   }, [isPaused]);
 
   useEffect(() => {
     let animationId: number;
-    const scroll = () => {
-      if (scrollRef.current) {
+
+    const scroll = (time: number) => {
+      if (lastTimeRef.current && scrollRef.current) {
+        const dt = (time - lastTimeRef.current) / 16.67; // Normalize to 60fps
+
         // Smoothly interpolate velocity
-        velocityRef.current += (targetVelocityRef.current - velocityRef.current) * 0.08;
-        
+        velocityRef.current += (targetVelocityRef.current - velocityRef.current) * 0.08 * dt;
+
         if (Math.abs(velocityRef.current) > 0.01) {
-          scrollRef.current.scrollLeft += velocityRef.current;
+          scrollPosRef.current += velocityRef.current * dt;
+          scrollRef.current.scrollLeft = scrollPosRef.current;
         }
 
-        // Infinite loop: if we scroll past the first set, jump back
-        if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth / 2) {
-          scrollRef.current.scrollLeft = 0;
-        } else if (scrollRef.current.scrollLeft <= 0) {
-          scrollRef.current.scrollLeft = scrollRef.current.scrollWidth / 2;
+        // Infinite loop jump
+        const halfWidth = scrollRef.current.scrollWidth / 2;
+        if (scrollPosRef.current >= halfWidth) {
+          scrollPosRef.current -= halfWidth;
+          scrollRef.current.scrollLeft = scrollPosRef.current;
+        } else if (scrollPosRef.current <= 0 && velocityRef.current < 0) {
+          scrollPosRef.current += halfWidth;
+          scrollRef.current.scrollLeft = scrollPosRef.current;
         }
       }
+
+      lastTimeRef.current = time;
       animationId = requestAnimationFrame(scroll);
     };
 
@@ -876,22 +887,29 @@ const Skills = () => {
     return () => cancelAnimationFrame(animationId);
   }, []);
 
+  // Update precision tracker during manual scroll
+  const handleManualScroll = () => {
+    if (isPaused && scrollRef.current) {
+      scrollPosRef.current = scrollRef.current.scrollLeft;
+    }
+  };
+
   return (
     <section id="expertise" className="py-48 scroll-mt-20 overflow-hidden">
       <div className="max-w-[90rem] mx-auto px-6">
         <SectionHeader title="Expertise" description="Technical analysis of core competencies and engineering toolsets." />
       </div>
-      
+
       <div 
         ref={scrollRef}
-        className="relative mt-10 flex overflow-x-auto no-scrollbar"
+        onScroll={handleManualScroll}
+        className="relative mt-10 flex overflow-x-auto no-scrollbar select-none"
         onMouseDown={() => setIsPaused(true)}
         onMouseUp={() => setIsPaused(false)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={() => setIsPaused(true)}
         onTouchEnd={() => setIsPaused(false)}
-      >
-        <div className="flex gap-4 md:gap-8 w-max px-8 py-4">
+      >        <div className="flex gap-4 md:gap-8 w-max px-8 py-4">
           {[...duplicatedSkills, ...duplicatedSkills].map((group, groupIndex) => {
             const CategoryIcon = categoryIcons[group.category as keyof typeof categoryIcons] || (() => null);
             return (
