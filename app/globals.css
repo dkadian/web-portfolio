@@ -84,10 +84,6 @@ body {
     animation: film-roll 30s linear infinite;
   }
 
-  .pause-on-hover:hover {
-    animation-play-state: paused;
-  }
-
   .custom-scrollbar::-webkit-scrollbar {
     width: 4px;
   }
@@ -103,6 +99,14 @@ body {
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.2);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   /* Matrix Wave Animation */

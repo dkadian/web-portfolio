@@ -1,18 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 // --- Components ---
 
 const Magnetic = ({ children, strength = 0.5 }: { children: React.ReactElement; strength?: number }) => {
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+  }, []);
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const x = useSpring(mouseX, { stiffness: 150, damping: 20, mass: 0.1 });
   const y = useSpring(mouseY, { stiffness: 150, damping: 20, mass: 0.1 });
 
   function handleMouseMove(e: React.MouseEvent) {
+    if (isTouch) return;
     const { clientX, clientY, currentTarget } = e;
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
     const centerX = left + width / 2;
@@ -22,9 +28,12 @@ const Magnetic = ({ children, strength = 0.5 }: { children: React.ReactElement; 
   }
 
   function handleMouseLeave() {
+    if (isTouch) return;
     mouseX.set(0);
     mouseY.set(0);
   }
+
+  if (isTouch) return children;
 
   return (
     <motion.div
@@ -812,6 +821,11 @@ const GitHubHub = () => {
 };
 
 const Skills = () => {
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const velocityRef = useRef(0.5);
+  const targetVelocityRef = useRef(0.5);
+
   const categoryIcons = {
     Frontend: () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -833,24 +847,54 @@ const Skills = () => {
   // Duplicate for infinite loop
   const duplicatedSkills = [...skillsData, ...skillsData];
 
+  useEffect(() => {
+    targetVelocityRef.current = isPaused ? 0 : 0.5;
+  }, [isPaused]);
+
+  useEffect(() => {
+    let animationId: number;
+    const scroll = () => {
+      if (scrollRef.current) {
+        // Smoothly interpolate velocity
+        velocityRef.current += (targetVelocityRef.current - velocityRef.current) * 0.08;
+        
+        if (Math.abs(velocityRef.current) > 0.01) {
+          scrollRef.current.scrollLeft += velocityRef.current;
+        }
+
+        // Infinite loop: if we scroll past the first set, jump back
+        if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth / 2) {
+          scrollRef.current.scrollLeft = 0;
+        }
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    animationId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationId);
+  }, []);
+
   return (
     <section id="skills" className="py-48 scroll-mt-20 overflow-hidden">
       <div className="max-w-[90rem] mx-auto px-6">
         <SectionHeader title="Expertise" description="Technical analysis of core competencies and engineering toolsets." />
       </div>
       
-      <div className="relative mt-10 group/slider-container">
-        {/* Gradient Overlays for smooth entry/exit */}
-        <div className="absolute inset-y-0 left-0 w-32 md:w-64 bg-gradient-to-r from-[#09090b] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-32 md:w-64 bg-gradient-to-l from-[#09090b] to-transparent z-10 pointer-events-none" />
-
-        <div className="flex gap-8 w-max px-8 animate-film-roll pause-on-hover">
-          {duplicatedSkills.map((group, groupIndex) => {
+      <div 
+        ref={scrollRef}
+        className="relative mt-10 flex overflow-x-auto no-scrollbar"
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div className="flex gap-4 md:gap-8 w-max px-8 py-4">
+          {[...duplicatedSkills, ...duplicatedSkills].map((group, groupIndex) => {
             const CategoryIcon = categoryIcons[group.category as keyof typeof categoryIcons] || (() => null);
             return (
-              <div key={`${group.category}-${groupIndex}`} className="w-[280px] md:w-[320px] flex-shrink-0">
+              <div key={`${group.category}-${groupIndex}`} className="w-[240px] md:w-[320px] flex-shrink-0">
                 <TiltCard className="h-full">
-                  <div className="glass-card p-7 md:p-8 h-full shadow-2xl bg-zinc-900/40 border border-white/5 hover:border-sky-500/20 transition-colors">
+                  <div className="glass-card p-6 md:p-8 h-full shadow-2xl bg-zinc-900/40 border border-white/5 hover:border-sky-500/20 transition-colors">
                     <div className="flex items-center gap-3 mb-8 border-b border-white/5 pb-5">
                       <div className="w-4 h-4 text-sky-500">
                         <CategoryIcon />
