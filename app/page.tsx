@@ -865,6 +865,8 @@ const Skills = () => {
         // Infinite loop: if we scroll past the first set, jump back
         if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth / 2) {
           scrollRef.current.scrollLeft = 0;
+        } else if (scrollRef.current.scrollLeft <= 0) {
+          scrollRef.current.scrollLeft = scrollRef.current.scrollWidth / 2;
         }
       }
       animationId = requestAnimationFrame(scroll);
@@ -875,7 +877,7 @@ const Skills = () => {
   }, []);
 
   return (
-    <section id="skills" className="py-48 scroll-mt-20 overflow-hidden">
+    <section id="expertise" className="py-48 scroll-mt-20 overflow-hidden">
       <div className="max-w-[90rem] mx-auto px-6">
         <SectionHeader title="Expertise" description="Technical analysis of core competencies and engineering toolsets." />
       </div>
@@ -883,10 +885,11 @@ const Skills = () => {
       <div 
         ref={scrollRef}
         className="relative mt-10 flex overflow-x-auto no-scrollbar"
+        onMouseDown={() => setIsPaused(true)}
+        onMouseUp={() => setIsPaused(false)}
+        onMouseLeave={() => setIsPaused(false)}
         onTouchStart={() => setIsPaused(true)}
         onTouchEnd={() => setIsPaused(false)}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
       >
         <div className="flex gap-4 md:gap-8 w-max px-8 py-4">
           {[...duplicatedSkills, ...duplicatedSkills].map((group, groupIndex) => {
