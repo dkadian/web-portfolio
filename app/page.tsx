@@ -296,7 +296,7 @@ const completedSGPAs = [
   { semester: "Semester 03", sgpa: 8.900 },
   { semester: "Semester 04", sgpa: 8.526 },
   { semester: "Semester 05", sgpa: 8.391 },
-  { semester: "Semester 06", sgpa: null },
+  { semester: "Semester 06", sgpa: 7.957 },
   { semester: "Semester 07", sgpa: null },
   { semester: "Semester 08", sgpa: null }
 ];
