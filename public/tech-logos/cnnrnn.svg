@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <linearGradient id="cnnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+  </defs>
+  <rect x="3" y="5" width="8" height="8" rx="1" stroke="url(#cnnGrad)" stroke-width="1.5" fill="none" />
+  <rect x="6" y="8" width="8" height="8" rx="1" stroke="url(#cnnGrad)" stroke-width="1.5" fill="none" opacity="0.5" />
+  <path d="M17 9 A 4 4 0 1 1 15 15" stroke="url(#cnnGrad)" stroke-width="1.5" />
+  <polyline points="14,13 14,16 17,16" stroke="url(#cnnGrad)" stroke-width="1.5" />
+  <circle cx="17" cy="9" r="1.5" fill="#ffffff" />
+  <circle cx="15" cy="15" r="1.5" fill="#ffffff" />
+</svg>

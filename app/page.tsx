@@ -128,15 +128,24 @@ const Reveal = ({ children, delay = 0, y = 20, className = "" }: { children: Rea
   </motion.div>
 );
 
+const KNOWN_LOGOS = [
+  "html", "css", "javascript", "react", "python", "mongodb", "mysql", "sql",
+  "pandas", "numpy", "scikitlearn", "matplotlib", "opencv", "tensorflow",
+  "langchain", "chromadb", "embeddings", "git", "jupyternotebook", "powerbi", "n8n",
+  "neuralnetworks", "cnnrnn", "lstmgru", "faissdb"
+];
+
 const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; index: number }) => {
-  const slug = skill.name.toLowerCase().replace(/[.\/\s]/g, "");
+  const slug = skill.name.toLowerCase().replace(/[.\/\s\-&]/g, "");
   let logoName = slug;
   if (slug === "htmlcss") logoName = "html";
+  if (slug === "reactjs") logoName = "react";
   
   const logoPath = `/tech-logos/${logoName}.svg`;
+  const hasLogo = KNOWN_LOGOS.includes(logoName);
 
   // Logos that need inversion/brightness for dark mode
-  const invertLogos = ["n8n", "express", "nextjs"];
+  const invertLogos = ["n8n", "express", "nextjs", "langchain", "matplotlib", "mysql", "neuralnetworks", "cnnrnn", "lstmgru", "faissdb"];
   const brightenLogos = ["pandas", "sql"];
   
   const filterClass = invertLogos.includes(logoName) 
@@ -155,19 +164,25 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-3">
-          <div className={`w-4 h-4 md:w-5 md:h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
-            <Image 
-              src={logoPath} 
-              alt={`${skill.name} logo`} 
-              fill 
-              sizes="20px"
-              className="object-contain"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.opacity = "0";
-              }}
-            />
-          </div>
+          {hasLogo ? (
+            <div className={`w-4 h-4 md:w-5 md:h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
+              <Image 
+                src={logoPath} 
+                alt={`${skill.name} logo`} 
+                fill 
+                sizes="20px"
+                className="object-contain"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.opacity = "0";
+                }}
+              />
+            </div>
+          ) : (
+            <div className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center opacity-45 group-hover:opacity-100 group-hover:text-sky-400 transition-all duration-500">
+              <span className="text-[10px] md:text-xs">✦</span>
+            </div>
+          )}
           <span className="text-[10px] md:text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">{skill.name}</span>
         </div>
         <span className="text-[8px] md:text-[10px] font-mono text-zinc-500">{skill.level}%</span>
@@ -189,11 +204,26 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
 
 const projects = [
   {
-    title: "PathFinder : A Career-Councelling Assistant",
-    description: "This is a comprehensive full-stack career counseling platform that integrates AI-driven chat guidance with automated resume parsing to provide personalized professional roadmaps and profile management.",
-    tech : ["Python", "FastAPI", "SQLAlchemy", "SQLite (aiosqlite)", "OpenRouter (for Llama models)", "LM Studio (for local LLMs)", "HuggingFace (Transformers/Accelerate)", "PyMuPDF/pdfplumber",     "React", "Vite", "Tailwind CSS", "Mermaid.js"],
-    link : "https://github.com/dkadian/career-assistant",
-    stats : "Context-Aware Chat",
+    title: "Lok Drishti : Sovereign Political Intelligence",
+    description: "Built a React 19 interface with interactive SVG election mapping and a constitutional quiz engine. Created a JWT-secured admin console with a database staging pipeline to safely propose and review system updates. Integrated ChromaDB and embeddings to enable semantic search queries over national legislative directories.",
+    tech : ["React 19", "SVG Mapping", "JWT Security", "ChromaDB", "Embeddings", "Semantic Search", "SQL/Staging"],
+    link : "https://github.com/dkadian/lok-drishti",
+    stats : "June 2026",
+    images: [
+      "/project-images/lok-drishti/1.png",
+      "/project-images/lok-drishti/2.png",
+      "/project-images/lok-drishti/3.png",
+      "/project-images/lok-drishti/4.png",
+      "/project-images/lok-drishti/5.png",
+      "/project-images/lok-drishti/6.png"
+    ]
+  },
+  {
+    title: "PathFinder : GenAI Career Guidance Assistant",
+    description: "A career counseling platform with a React frontend and FastAPI backend, utilizing aiosqlite for database operations to persist user profiles, sessions, and chat histories. Built a document-processing pipeline using pdfplumber, PyMuPDF, and Tesseract OCR to extract resume text, LLM extraction to automatically populate user profiles. Integrated cloud and local models—specifically Llama-3.1, LM Studio, and a local T5-Large model implementing real-time response streaming and strict content guardrails.",
+    tech: ["React", "FastAPI", "Llama 3.1", "LM Studio", "T5-Large", "aiosqlite", "pdfplumber", "PyMuPDF", "Tesseract OCR"],
+    link: "https://github.com/dkadian/career-assistant",
+    stats: "May 2026",
     images: [
       "/project-images/pathfinder/1.png",
       "/project-images/pathfinder/2.png",
@@ -201,11 +231,19 @@ const projects = [
     ]
   },
   {
-    title: "web-portfolio",
-    description: "A modern, responsive portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases my skills, projects, education, and provides a way to connect with me.",
+    title: "Hand Gesture Recognition",
+    description: "Trained CNN model for gesture recognition with image augmentation to reduce overfitting. Optimized hyperparameters to achieve high accuracy for sign language applications. Experimented with the hyperparameters to improve the accuracy and model performance.",
+    tech: ["Python", "Deep Learning", "TensorFlow", "OpenCV", "CNN"],
+    link: "https://github.com/dkadian/Hand_gesture_recog.",
+    stats: "January 2026",
+    isModelOnly: true
+  },
+  {
+    title: "Portfolio Website",
+    description: "Built a modern React/TypeScript site with Tailwind CSS and App Router architecture. Implemented interactive transitions and clean layouts to showcase projects, skills, education, and contact channels.",
     tech: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion"],
     link: "https://github.com/dkadian/web-portfolio",
-    stats: "v1.2.0",
+    stats: "November 2025",
     images: [
       "/project-images/web-portfolio/1.png",
       "/project-images/web-portfolio/2.png",
@@ -213,70 +251,62 @@ const projects = [
     ]
   },
   {
-    title: "Dogs_cats_recog",
-    description: "This repository implements a Support Vector Machine (SVM) classifier in Python to classify images of cats and dogs from the popular Kaggle Cats vs Dogs dataset.",
-    tech: ["Python", "FastAPI", "TensorFlow", "MobileNetV2", "Transformers", "Pillow", "OpenCV", "React", "TypeScript","Vite"],
+    title: "SVM Based Dog and Cat Recognition",
+    description: "Built an SVM image classifier for cat/dog distinction using Kaggle datasets. Developed an end-to-end Python pipeline including preprocessing and feature scaling. Designed end-to-end machine learning pipeline for image classification.",
+    tech: ["Python", "SVM", "Scikit-Learn", "OpenCV", "Image Processing"],
     link: "https://github.com/dkadian/Dogs_cats_recog",
-    stats: "94% Acc",
+    stats: "June 2025",
     images: [
       "/project-images/dogs-cats/1.png",
       "/project-images/dogs-cats/2.png",
       "/project-images/dogs-cats/3.png"
     ]
-  },
-  {
-    title: "House_pricing",
-    description: "The code aims to build and evaluate linear regression models to predict house prices (SalePrice) based on their square footage and number of bedrooms and bathrooms.",
-    tech: ["Python", "Linear Regression", "Pandas"],
-    link: "https://github.com/dkadian/House_pricing",
-    stats: "ML Model",
-    isModelOnly: true
-  },
-  {
-    title: "Hand_gesture_recog.",
-    description: "Hand gesture recognition is a crucial component of human-computer interaction. This project aims to build a deep learning model capable of recognizing different hand gestures in real-time.",
-    tech: ["Python", "Deep Learning", "OpenCV"],
-    link: "https://github.com/dkadian/Hand_gesture_recog.",
-    stats: "Real-time",
-    isModelOnly: true
-  },
+  }
 ];
 
 const skillsData = [
   { 
-    category: "Frontend", 
+    category: "Web Development", 
     skills: [
-      { name: "React", level: 70 }, 
-      { name: "TypeScript", level: 30 },
-      { name: "Tailwind", level: 75 },
-      { name: "HTML/CSS", level: 80 }
+      { name: "React.js", level: 85 }, 
+      { name: "JavaScript", level: 85 },
+      { name: "HTML/CSS", level: 90 }
     ] 
   },
   { 
-    category: "Backend", 
+    category: "Backend & Database", 
     skills: [
-      { name: "Python", level: 85 },
-      { name: "FastAPI", level: 75 },
-      { name: "Express", level: 70 },
-      { name: "Java", level: 70 }
+      { name: "Python", level: 90 },
+      { name: "MongoDB", level: 75 },
+      { name: "MySQL", level: 75 }
     ] 
   },
   { 
-    category: "Data Visualization", 
+    category: "Data Science", 
     skills: [
-      
       { name: "Pandas", level: 85 }, 
-      { name: "NumPy", level: 80 }, 
-      { name: "SQL", level: 80 },
-      { name: "PowerBI", level: 75 }
+      { name: "NumPy", level: 85 }, 
+      { name: "Scikit-learn", level: 80 },
+      { name: "Matplotlib", level: 80 },
+      { name: "OpenCV", level: 75 }
     ] 
   },
   { 
     category: "Deep Learning", 
     skills: [
-      { name: "TensorFlow", level: 70 }, 
-      { name: "OpenCV", level: 75 },
-      { name: "Scikitlearn", level: 80 }
+      { name: "TensorFlow", level: 75 }, 
+      { name: "Neural Networks", level: 80 },
+      { name: "CNN & RNN", level: 80 },
+      { name: "LSTM & GRU", level: 75 }
+    ] 
+  },
+  { 
+    category: "GenAI", 
+    skills: [
+      { name: "LangChain", level: 80 }, 
+      { name: "ChromaDB", level: 80 }, 
+      { name: "Embeddings", level: 80 },
+      { name: "FAISSdb", level: 75 }
     ] 
   },
   { 
@@ -284,11 +314,10 @@ const skillsData = [
     skills: [
       { name: "Git", level: 85 }, 
       { name: "Jupyter Notebook", level: 80 },
-      { name: "Docker", level: 40 }, 
-      { name: "MongoDB", level: 70 },
-      { name: "n8n", level: 60 }
+      { name: "Power BI", level: 75 },
+      { name: "n8n", level: 70 }
     ] 
-  },
+  }
 ];
 const completedSGPAs = [
   { semester: "Semester 01", sgpa: 8.286 },
@@ -311,7 +340,7 @@ const Hero = () => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
-    const roles = ["B.Tech CS Student", "Data Analyst", "ML Engineer", "Python Developer", "Tech Enthusiast"];
+    const roles = ["B.Tech CS (AIML) Student", "AI/ML Developer", "Data Analyst", "Python Developer", "Tech Enthusiast"];
     let currentRoleIndex = 0; let charIndex = 0; let isDeleting = false; let timeoutId: NodeJS.Timeout;
     const typeRole = () => {
       const currentRole = roles[currentRoleIndex];
@@ -514,6 +543,9 @@ interface Project {
   stats: string;
   images?: string[];
   isModelOnly?: boolean;
+  backTitle?: string;
+  backDescription?: string;
+  backIcon?: string;
 }
 
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
@@ -593,6 +625,24 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                   <div className="flex-1 min-h-0">
                     {project.images && project.images.length > 0 ? (
                       <ImageSlider images={project.images} title={project.title} isFlipped={isFlipped} />
+                    ) : project.backTitle ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center space-y-8 p-4">
+                        <div className="w-20 h-20 rounded-full bg-sky-500/10 flex items-center justify-center border border-sky-500/20">
+                          <span className="text-4xl">{project.backIcon || "⚙️"}</span>
+                        </div>
+                        <div className="space-y-4">
+                          <h4 className="text-2xl font-bold text-white uppercase tracking-tight">{project.backTitle}</h4>
+                          <p className="text-zinc-500 max-w-sm mx-auto">{project.backDescription}</p>
+                        </div>
+                        <a 
+                          href={project.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="source-link px-8 py-4 bg-white text-black rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-sky-400 hover:text-white transition-all"
+                        >
+                          Access Repository
+                        </a>
+                      </div>
                     ) : project.isModelOnly ? (
                       <div className="h-full flex flex-col items-center justify-center text-center space-y-8">
                         <div className="w-20 h-20 rounded-full bg-sky-500/10 flex items-center justify-center border border-sky-500/20">
@@ -829,17 +879,20 @@ const Skills = () => {
   const lastTimeRef = useRef<number>(0);
 
   const categoryIcons = {
-    Frontend: () => (
+    "Web Development": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
     ),
-    Backend: () => (
+    "Backend & Database": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>
     ),
-    "Data Visualization": () => (
+    "Data Science": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
     ),
     "Deep Learning": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/></svg>
+    ),
+    "GenAI": () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5 5 3Z"/><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z"/></svg>
     ),
     Tools: () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -948,9 +1001,9 @@ const Education = () => (
             <div className="space-y-6 md:space-y-8">
               <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 border-b border-white/5 pb-6 md:pb-8 hover:border-sky-500/30 transition-colors duration-700">
                 <div className="space-y-2">
-                  <span className="text-[8px] md:text-[10px] font-bold text-zinc-500 uppercase tracking-widest">2023 — 2027</span>
-                  <h3 className="text-xl md:text-3xl font-bold text-white uppercase tracking-tight text-balance">B.Tech in Computer Science</h3>
-                  <p className="text-zinc-500 text-xs md:text-sm font-light italic">Sushant University • School of Engineering</p>
+                  <span className="text-[8px] md:text-[10px] font-bold text-zinc-500 uppercase tracking-widest">2023 — Present</span>
+                  <h3 className="text-xl md:text-3xl font-bold text-white uppercase tracking-tight text-balance">B.Tech in Computer Science (AIML)</h3>
+                  <p className="text-zinc-500 text-xs md:text-sm font-light italic">Sushant University, Gurugram</p>
                 </div>
                 <div className="text-left">
                   <span className="text-[8px] md:text-[9px] font-bold text-zinc-600 uppercase tracking-widest">CGPA_Index</span>

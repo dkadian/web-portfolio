@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <linearGradient id="embedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+  </defs>
+  <line x1="4" y1="20" x2="20" y2="4" stroke="url(#embedGrad)" stroke-width="1.5" opacity="0.3" />
+  <line x1="4" y1="12" x2="20" y2="12" stroke="url(#embedGrad)" stroke-width="1.5" opacity="0.3" />
+  <line x1="12" y1="4" x2="12" y2="20" stroke="url(#embedGrad)" stroke-width="1.5" opacity="0.3" />
+  <line x1="12" y1="12" x2="17" y2="7" stroke="url(#embedGrad)" stroke-width="2.5" />
+  <polygon points="17,7 14,7 17,10" fill="url(#embedGrad)" />
+  <line x1="12" y1="12" x2="6" y2="9" stroke="url(#embedGrad)" stroke-width="2" />
+  <polygon points="6,9 8,11 6,12" fill="url(#embedGrad)" />
+  <line x1="12" y1="12" x2="15" y2="17" stroke="url(#embedGrad)" stroke-width="2" />
+  <polygon points="15,17 12,16 14,14" fill="url(#embedGrad)" />
+  <circle cx="17" cy="7" r="1.5" fill="#ffffff" />
+  <circle cx="6" cy="9" r="1.5" fill="#ffffff" />
+  <circle cx="15" cy="17" r="1.5" fill="#ffffff" />
+  <circle cx="12" cy="12" r="2" fill="#ffffff" />
+</svg>

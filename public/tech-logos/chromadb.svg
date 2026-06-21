@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <linearGradient id="chromaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+  <circle cx="12" cy="12" r="9" stroke="url(#chromaGrad)" stroke-width="2" />
+  <circle cx="9" cy="12" r="5" stroke="url(#chromaGrad)" stroke-width="1.5" stroke-dasharray="2,2" />
+  <circle cx="15" cy="12" r="5" stroke="url(#chromaGrad)" stroke-width="1.5" stroke-dasharray="2,2" />
+  <circle cx="12" cy="12" r="2" fill="url(#chromaGrad)" />
+</svg>
