@@ -82,9 +82,9 @@ const TiltCard = ({ children, className = "" }: { children: React.ReactNode; cla
 
 const SectionHeader = ({ title, description }: { title: string; description: string }) => {
   const words = title.split(" ");
-  
+
   return (
-    <motion.header 
+    <motion.header
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -97,7 +97,7 @@ const SectionHeader = ({ title, description }: { title: string; description: str
           </span>
         ))}
       </motion.h2>
-      <motion.p 
+      <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
@@ -105,12 +105,12 @@ const SectionHeader = ({ title, description }: { title: string; description: str
       >
         {description}
       </motion.p>
-      <motion.div 
+      <motion.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         style={{ originX: 0 }}
         transition={{ duration: 1.2, delay: 1 }}
-        className="h-[1px] bg-zinc-800 mt-6 md:mt-8 w-16 md:w-24" 
+        className="h-[1px] bg-zinc-800 mt-6 md:mt-8 w-16 md:w-24"
       />
     </motion.header>
   );
@@ -128,34 +128,26 @@ const Reveal = ({ children, delay = 0, y = 20, className = "" }: { children: Rea
   </motion.div>
 );
 
-const KNOWN_LOGOS = [
-  "html", "css", "javascript", "react", "python", "mongodb", "mysql", "sql",
-  "pandas", "numpy", "scikitlearn", "matplotlib", "opencv", "tensorflow",
-  "langchain", "chromadb", "embeddings", "git", "jupyternotebook", "powerbi", "n8n",
-  "neuralnetworks", "cnnrnn", "lstmgru", "faissdb"
-];
-
 const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; index: number }) => {
   const slug = skill.name.toLowerCase().replace(/[.\/\s\-&]/g, "");
   let logoName = slug;
   if (slug === "htmlcss") logoName = "html";
   if (slug === "reactjs") logoName = "react";
-  
+
   const logoPath = `/tech-logos/${logoName}.svg`;
-  const hasLogo = KNOWN_LOGOS.includes(logoName);
 
   // Logos that need inversion/brightness for dark mode
-  const invertLogos = ["n8n", "express", "nextjs", "langchain", "matplotlib", "mysql", "neuralnetworks", "cnnrnn", "lstmgru", "faissdb"];
+  const invertLogos = ["n8n", "express", "nextjs", "langchain", "matplotlib", "mysql"];
   const brightenLogos = ["pandas", "sql"];
-  
-  const filterClass = invertLogos.includes(logoName) 
-    ? "invert brightness-[2]" 
-    : brightenLogos.includes(logoName) 
-    ? "brightness-[3] contrast-[1.2]" 
-    : "";
+
+  const filterClass = invertLogos.includes(logoName)
+    ? "invert brightness-[2]"
+    : brightenLogos.includes(logoName)
+      ? "brightness-[3] contrast-[1.2]"
+      : "";
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, x: -10 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
@@ -164,31 +156,25 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-3">
-          {hasLogo ? (
-            <div className={`w-4 h-4 md:w-5 md:h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
-              <Image 
-                src={logoPath} 
-                alt={`${skill.name} logo`} 
-                fill 
-                sizes="20px"
-                className="object-contain"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.opacity = "0";
-                }}
-              />
-            </div>
-          ) : (
-            <div className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center opacity-45 group-hover:opacity-100 group-hover:text-sky-400 transition-all duration-500">
-              <span className="text-[10px] md:text-xs">✦</span>
-            </div>
-          )}
+          <div className={`w-4 h-4 md:w-5 md:h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
+            <Image
+              src={logoPath}
+              alt={`${skill.name} logo`}
+              fill
+              sizes="20px"
+              className="object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.opacity = "0";
+              }}
+            />
+          </div>
           <span className="text-[10px] md:text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">{skill.name}</span>
         </div>
         <span className="text-[8px] md:text-[10px] font-mono text-zinc-500">{skill.level}%</span>
       </div>
       <div className="h-0.5 md:h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
-        <motion.div 
+        <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${skill.level}%` }}
           viewport={{ once: true }}
@@ -206,9 +192,9 @@ const projects = [
   {
     title: "Lok Drishti : Sovereign Political Intelligence",
     description: "Built a React 19 interface with interactive SVG election mapping and a constitutional quiz engine. Created a JWT-secured admin console with a database staging pipeline to safely propose and review system updates. Integrated ChromaDB and embeddings to enable semantic search queries over national legislative directories.",
-    tech : ["React 19", "SVG Mapping", "JWT Security", "ChromaDB", "Embeddings", "Semantic Search", "SQL/Staging"],
-    link : "https://github.com/dkadian/lok-drishti",
-    stats : "June 2026",
+    tech: ["React 19", "SVG Mapping", "JWT Security", "ChromaDB", "Embeddings", "Semantic Search", "SQL/Staging"],
+    link: "https://github.com/dkadian/lok-drishti",
+    stats: "June 2026",
     images: [
       "/project-images/lok-drishti/1.png",
       "/project-images/lok-drishti/2.png",
@@ -216,7 +202,9 @@ const projects = [
       "/project-images/lok-drishti/4.png",
       "/project-images/lok-drishti/5.png",
       "/project-images/lok-drishti/6.png"
-    ]
+    ],
+    backDescription: "Lok Drishti is a production-grade political intelligence framework integrating React 19 interactive SVG mapping, JWT admin console, database staging pipelines, and semantic ChromaDB search.",
+    backIcon: "🏛️"
   },
   {
     title: "PathFinder : GenAI Career Guidance Assistant",
@@ -265,58 +253,58 @@ const projects = [
 ];
 
 const skillsData = [
-  { 
-    category: "Web Development", 
+  {
+    category: "Web Development",
     skills: [
-      { name: "React.js", level: 85 }, 
+      { name: "React.js", level: 85 },
       { name: "JavaScript", level: 85 },
       { name: "HTML/CSS", level: 90 }
-    ] 
+    ]
   },
-  { 
-    category: "Backend & Database", 
+  {
+    category: "Backend & Database",
     skills: [
       { name: "Python", level: 90 },
       { name: "MongoDB", level: 75 },
       { name: "MySQL", level: 75 }
-    ] 
+    ]
   },
-  { 
-    category: "Data Science", 
+  {
+    category: "Data Science",
     skills: [
-      { name: "Pandas", level: 85 }, 
-      { name: "NumPy", level: 85 }, 
+      { name: "Pandas", level: 85 },
+      { name: "NumPy", level: 85 },
       { name: "Scikit-learn", level: 80 },
       { name: "Matplotlib", level: 80 },
       { name: "OpenCV", level: 75 }
-    ] 
+    ]
   },
-  { 
-    category: "Deep Learning", 
+  {
+    category: "Deep Learning",
     skills: [
-      { name: "TensorFlow", level: 75 }, 
+      { name: "TensorFlow", level: 75 },
       { name: "Neural Networks", level: 80 },
       { name: "CNN & RNN", level: 80 },
       { name: "LSTM & GRU", level: 75 }
-    ] 
+    ]
   },
-  { 
-    category: "GenAI", 
+  {
+    category: "GenAI",
     skills: [
-      { name: "LangChain", level: 80 }, 
-      { name: "ChromaDB", level: 80 }, 
+      { name: "LangChain", level: 80 },
+      { name: "ChromaDB", level: 80 },
       { name: "Embeddings", level: 80 },
       { name: "FAISSdb", level: 75 }
-    ] 
+    ]
   },
-  { 
-    category: "Tools", 
+  {
+    category: "Tools",
     skills: [
-      { name: "Git", level: 85 }, 
+      { name: "Git", level: 85 },
       { name: "Jupyter Notebook", level: 80 },
       { name: "Power BI", level: 75 },
       { name: "n8n", level: 70 }
-    ] 
+    ]
   }
 ];
 const completedSGPAs = [
@@ -373,47 +361,47 @@ const Hero = () => {
           <Reveal delay={0.4}>
             <TiltCard>
               <div className="relative w-48 h-48 md:w-72 md:h-72 group perspective-1000">
-                <motion.div 
+                <motion.div
                   className="relative w-full h-full"
                   animate={{ rotateY: isFlipped ? 180 : 0 }}
                   transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   {/* Front Side: Unknown.jpg */}
-                  <motion.div 
-                    className="absolute inset-0" 
+                  <motion.div
+                    className="absolute inset-0"
                     style={{ backfaceVisibility: "hidden" }}
                     animate={{ opacity: isFlipped ? 0 : 1 }}
                     transition={{ duration: 0.4, delay: isFlipped ? 0 : 0.2 }}
                   >
                     <div className="relative w-full h-full grayscale transition-all duration-1000 ease-out overflow-hidden border border-zinc-800 rounded-2xl shadow-2xl bg-zinc-900/50 p-2">
                       <div className="relative w-full h-full overflow-hidden rounded-xl">
-                        <Image 
-                          src="/Unknown.jpg" 
-                          alt="Unknown Identity" 
-                          fill 
+                        <Image
+                          src="/Unknown.jpg"
+                          alt="Unknown Identity"
+                          fill
                           sizes="(max-width: 768px) 224px, 288px"
-                          className="object-cover scale-110" 
+                          className="object-cover scale-110"
                         />
                       </div>
                     </div>
                   </motion.div>
 
                   {/* Back Side: profile.jpeg */}
-                  <motion.div 
-                    className="absolute inset-0" 
+                  <motion.div
+                    className="absolute inset-0"
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                     animate={{ opacity: isFlipped ? 1 : 0 }}
                     transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
                   >
                     <div className="relative w-full h-full transition-all duration-1000 ease-out overflow-hidden border border-zinc-800 rounded-2xl shadow-2xl bg-zinc-900/50 p-2">
                       <div className="relative w-full h-full overflow-hidden rounded-xl">
-                        <Image 
-                          src="/profile.jpeg" 
-                          alt="Deepak Kadian" 
-                          fill 
+                        <Image
+                          src="/profile.jpeg"
+                          alt="Deepak Kadian"
+                          fill
                           sizes="(max-width: 768px) 224px, 288px"
-                          className="object-cover" 
+                          className="object-cover"
                         />
                       </div>
                     </div>
@@ -422,7 +410,7 @@ const Hero = () => {
 
                 {/* Reveal Toggle Button - Extremely Minimal */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-30 pointer-events-none">
-                  <button 
+                  <button
                     onClick={() => setIsFlipped(!isFlipped)}
                     className="pointer-events-auto px-4 py-2 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-sky-500 hover:border-sky-400 transition-all active:scale-95 shadow-2xl"
                   >
@@ -494,10 +482,10 @@ const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: st
           className="absolute inset-0 p-2 md:p-4"
         >
           <div className="relative w-full h-full overflow-hidden rounded-lg">
-            <Image 
-              src={images[index]} 
-              alt={`${title} view ${index + 1}`} 
-              fill 
+            <Image
+              src={images[index]}
+              alt={`${title} view ${index + 1}`}
+              fill
               sizes="(max-width: 768px) 100vw, 800px"
               className="object-contain"
               priority={index === 0}
@@ -508,13 +496,13 @@ const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: st
 
       {/* Manual Controls */}
       <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 md:gap-4 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-500 z-20">
-        <button 
+        <button
           onClick={(e) => { e.stopPropagation(); paginate(-1); }}
           className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors text-sm md:text-base"
         >
           ↑
         </button>
-        <button 
+        <button
           onClick={(e) => { e.stopPropagation(); paginate(1); }}
           className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-sky-500 transition-colors text-sm md:text-base"
         >
@@ -525,9 +513,9 @@ const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: st
       {/* Indicators */}
       <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2 z-20">
         {images.map((_, i) => (
-          <div 
-            key={i} 
-            className={`w-1 md:w-1.5 h-1 md:h-1.5 rounded-full transition-all duration-500 ${i === index ? "bg-sky-500 w-3 md:w-4" : "bg-white/20"}`} 
+          <div
+            key={i}
+            className={`w-1 md:w-1.5 h-1 md:h-1.5 rounded-full transition-all duration-500 ${i === index ? "bg-sky-500 w-3 md:w-4" : "bg-white/20"}`}
           />
         ))}
       </div>
@@ -568,8 +556,8 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Front Side */}
-            <motion.div 
-              className="absolute inset-0 w-full h-full" 
+            <motion.div
+              className="absolute inset-0 w-full h-full"
               style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
               animate={{ opacity: isFlipped ? 0 : 1 }}
               transition={{ duration: 0.4, delay: isFlipped ? 0 : 0.2 }}
@@ -604,8 +592,8 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             </motion.div>
 
             {/* Back Side */}
-            <motion.div 
-              className="absolute inset-0 w-full h-full" 
+            <motion.div
+              className="absolute inset-0 w-full h-full"
               style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
               animate={{ opacity: isFlipped ? 1 : 0 }}
               transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
@@ -614,14 +602,14 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                 <div className="relative z-10 h-full flex flex-col p-4 md:p-8">
                   <div className="flex justify-between items-center mb-4 md:mb-8">
                     <h3 className="text-sm md:text-xl font-bold text-white uppercase tracking-tighter">Project Visuals</h3>
-                    <button 
+                    <button
                       onClick={(e) => { e.stopPropagation(); setIsFlipped(false); }}
                       className="text-zinc-500 hover:text-white transition-colors p-2"
                     >
                       Close ×
                     </button>
                   </div>
-                  
+
                   <div className="flex-1 min-h-0">
                     {project.images && project.images.length > 0 ? (
                       <ImageSlider images={project.images} title={project.title} isFlipped={isFlipped} />
@@ -634,10 +622,10 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                           <h4 className="text-2xl font-bold text-white uppercase tracking-tight">{project.backTitle}</h4>
                           <p className="text-zinc-500 max-w-sm mx-auto">{project.backDescription}</p>
                         </div>
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="source-link px-8 py-4 bg-white text-black rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-sky-400 hover:text-white transition-all"
                         >
                           Access Repository
@@ -652,10 +640,10 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                           <h4 className="text-2xl font-bold text-white uppercase tracking-tight">Model Analysis Only</h4>
                           <p className="text-zinc-500 max-w-xs mx-auto">This project focuses on the core machine learning model and architectural implementation rather than a visual frontend.</p>
                         </div>
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="source-link px-8 py-4 bg-white text-black rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-sky-400 hover:text-white transition-all"
                         >
                           View Model Source
@@ -676,7 +664,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 const Projects = () => (
   <section id="projects" className="py-48 scroll-mt-20 overflow-visible">
     <SectionHeader title="Selected Work" description="A curated selection of technical implementations and software architecture." />
-    
+
     <Reveal delay={0.6} y={10} className="-mt-12 mb-16">
       <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-sky-500/5 border border-sky-500/10 text-[10px] font-bold text-sky-500 tracking-[0.2em] uppercase">
         <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
@@ -740,7 +728,7 @@ const GitHubHub = () => {
   return (
     <section id="activity" className="py-24 md:py-48 scroll-mt-20">
       <SectionHeader title="Contribution Graph" description="Real-time pulse of my technical development cycles and architectural consistency." />
-      
+
       <div className="space-y-8 md:space-y-12">
         <Reveal>
           <TiltCard>
@@ -818,7 +806,7 @@ const GitHubHub = () => {
                               {week.contributionDays.map((day: GitHubContributionDay, j: number) => {
                                 const count = day.contributionCount;
                                 let color = "#18181b"; // Empty
-                                
+
                                 if (count > 0) {
                                   if (count <= 2) color = "#075985"; // Darkest blue (Few commits)
                                   else if (count <= 5) color = "#0284c7";
@@ -830,7 +818,7 @@ const GitHubHub = () => {
                                   <div
                                     key={j}
                                     className="w-[12px] h-[12px] rounded-[2px] opacity-0 animate-matrix transition-colors duration-500 hover:ring-1 hover:ring-white/20"
-                                    style={{ 
+                                    style={{
                                       backgroundColor: color,
                                       animationDelay: `${(i + j) * 0.005}s`
                                     }}
@@ -880,22 +868,22 @@ const Skills = () => {
 
   const categoryIcons = {
     "Web Development": () => (
-      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
     ),
     "Backend & Database": () => (
-      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6" y2="6" /><line x1="6" y1="18" x2="6" y2="18" /></svg>
     ),
     "Data Science": () => (
-      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
     ),
     "Deep Learning": () => (
-      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/></svg>
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><circle cx="12" cy="12" r="3" /></svg>
     ),
     "GenAI": () => (
-      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5 5 3Z"/><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z"/></svg>
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5 5 3Z" /><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z" /></svg>
     ),
     Tools: () => (
-      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
     )
   };
 
@@ -953,7 +941,7 @@ const Skills = () => {
         <SectionHeader title="Expertise" description="Technical analysis of core competencies and engineering toolsets." />
       </div>
 
-      <div 
+      <div
         ref={scrollRef}
         onScroll={handleManualScroll}
         className="relative mt-10 flex overflow-x-auto no-scrollbar select-none"
