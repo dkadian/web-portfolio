@@ -129,10 +129,14 @@ const Reveal = ({ children, delay = 0, y = 20, className = "" }: { children: Rea
 );
 
 const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; index: number }) => {
+  const [imageError, setImageError] = useState(false);
   const slug = skill.name.toLowerCase().replace(/[.\/\s\-&]/g, "");
   let logoName = slug;
   if (slug === "htmlcss") logoName = "html";
   if (slug === "reactjs") logoName = "react";
+  if (slug === "faiss") logoName = "faissdb";
+  if (slug === "sqlite") logoName = "sql";
+  if (slug === "github") logoName = "git";
 
   const logoPath = `/tech-logos/${logoName}.svg`;
 
@@ -157,17 +161,42 @@ const SkillItem = ({ skill, index }: { skill: { name: string; level: number }; i
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-3">
           <div className={`w-4 h-4 md:w-5 md:h-5 relative flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 ${filterClass}`}>
-            <Image
-              src={logoPath}
-              alt={`${skill.name} logo`}
-              fill
-              sizes="20px"
-              className="object-contain"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.opacity = "0";
-              }}
-            />
+            {!imageError ? (
+              <Image
+                src={logoPath}
+                alt={`${skill.name} logo`}
+                fill
+                sizes="20px"
+                className="object-contain"
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              (() => {
+                const lowerName = skill.name.toLowerCase();
+                if (["mongodb", "mysql", "sqlite", "database", "sql"].some(k => lowerName.includes(k))) {
+                  return (
+                    <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-zinc-400 group-hover:stroke-sky-400 transition-colors" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <ellipse cx="12" cy="5" rx="9" ry="3" />
+                      <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+                      <path d="M3 12A9 3 0 0 0 21 12" />
+                    </svg>
+                  );
+                }
+                if (["ai", "chatgpt", "claude", "gemini", "groq", "ollama", "huggingface", "neural", "cnn", "rnn", "lstm", "gru", "langchain", "embeddings", "chroma", "antigravity"].some(k => lowerName.includes(k))) {
+                  return (
+                    <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-zinc-400 group-hover:stroke-sky-400 transition-colors" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                    </svg>
+                  );
+                }
+                return (
+                  <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-zinc-400 group-hover:stroke-sky-400 transition-colors" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg>
+                );
+              })()
+            )}
           </div>
           <span className="text-[10px] md:text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">{skill.name}</span>
         </div>
@@ -258,15 +287,20 @@ const skillsData = [
     skills: [
       { name: "React.js", level: 85 },
       { name: "JavaScript", level: 85 },
-      { name: "HTML/CSS", level: 90 }
+      { name: "HTML", level: 88 },
+      { name: "CSS", level: 88 }
     ]
   },
   {
-    category: "Backend & Database",
+    category: "Backend & Databases",
     skills: [
       { name: "Python", level: 90 },
-      { name: "MongoDB", level: 75 },
-      { name: "MySQL", level: 75 }
+      { name: "FastAPI", level: 70 },
+      { name: "Flask", level: 75 },
+      { name: "Streamlit", level: 75 },
+      { name: "MySQL", level: 78 },
+      { name: "MongoDB", level: 78 },
+      { name: "SQLite", level: 60 }
     ]
   },
   {
@@ -275,7 +309,7 @@ const skillsData = [
       { name: "Pandas", level: 85 },
       { name: "NumPy", level: 85 },
       { name: "Scikit-learn", level: 80 },
-      { name: "Matplotlib", level: 80 },
+      { name: "Matplotlib", level: 78 },
       { name: "OpenCV", level: 75 }
     ]
   },
@@ -289,18 +323,43 @@ const skillsData = [
     ]
   },
   {
-    category: "GenAI",
+    category: "Generative AI",
     skills: [
-      { name: "LangChain", level: 80 },
-      { name: "ChromaDB", level: 80 },
+      { name: "LangChain", level: 82 },
+      { name: "Hugging Face Transformers", level: 78 },
+      { name: "Ollama", level: 78 },
       { name: "Embeddings", level: 80 },
-      { name: "FAISSdb", level: 75 }
+      { name: "ChromaDB", level: 80 },
+      { name: "FAISS", level: 75 }
+    ]
+  },
+  {
+    category: "AI Models & APIs",
+    skills: [
+      { name: "OpenAI API", level: 67 },
+      { name: "Gemini API", level: 66 },
+      { name: "Claude API", level: 68 },
+      { name: "Groq API", level: 65 }
+    ]
+  },
+  {
+    category: "AI Development Tools",
+    skills: [
+      { name: "ChatGPT", level: 73 },
+      { name: "Claude Code", level: 71 },
+      { name: "Gemini CLI", level: 72 },
+      { name: "OpenAI Codex CLI", level: 70 },
+      { name: "Cursor", level: 74 },
+      { name: "VS Code", level: 73 },
+      { name: "Antigravity IDE", level: 74 },
+      { name: "Antigravity CLI", level: 71 }
     ]
   },
   {
     category: "Tools",
     skills: [
       { name: "Git", level: 85 },
+      { name: "GitHub", level: 85 },
       { name: "Jupyter Notebook", level: 80 },
       { name: "Power BI", level: 75 },
       { name: "n8n", level: 70 }
@@ -441,7 +500,45 @@ const Hero = () => {
         <Reveal delay={1.2}>
           <div className="flex justify-center">
             <Magnetic>
-              <a href="#projects" className="group flex flex-col items-center gap-4 cursor-pointer">
+              <a 
+                href="#projects" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById("projects");
+                  if (element) {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = element.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    const startPosition = window.scrollY;
+                    const distance = offsetPosition - startPosition;
+                    let startTime: number | null = null;
+                    const duration = 900;
+
+                    const easeInOutCubic = (t: number) => {
+                      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+                    };
+
+                    const animation = (currentTime: number) => {
+                      if (startTime === null) startTime = currentTime;
+                      const timeElapsed = currentTime - startTime;
+                      const progress = Math.min(timeElapsed / duration, 1);
+                      const ease = easeInOutCubic(progress);
+                      
+                      window.scrollTo(0, startPosition + distance * ease);
+                      
+                      if (timeElapsed < duration) {
+                        requestAnimationFrame(animation);
+                      }
+                    };
+
+                    requestAnimationFrame(animation);
+                  }
+                }}
+                className="group flex flex-col items-center gap-4 cursor-pointer"
+              >
                 <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.4em] group-hover:text-sky-500 transition-colors">Scroll_To_Explore</span>
                 <div className="w-[1px] h-20 bg-gradient-to-b from-sky-500 to-transparent relative overflow-hidden">
                   <motion.div animate={{ y: [0, 80] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-full h-1/2 bg-white" />
@@ -860,17 +957,19 @@ const GitHubHub = () => {
 
 const Skills = () => {
   const [isPaused, setIsPaused] = useState(false);
+  const isPausedRef = useRef(isPaused);
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollPosRef = useRef(0);
   const velocityRef = useRef(0.5);
   const targetVelocityRef = useRef(0.5);
   const lastTimeRef = useRef<number>(0);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const categoryIcons = {
     "Web Development": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
     ),
-    "Backend & Database": () => (
+    "Backend & Databases": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6" y2="6" /><line x1="6" y1="18" x2="6" y2="18" /></svg>
     ),
     "Data Science": () => (
@@ -879,10 +978,16 @@ const Skills = () => {
     "Deep Learning": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><circle cx="12" cy="12" r="3" /></svg>
     ),
-    "GenAI": () => (
+    "Generative AI": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5 5 3Z" /><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z" /></svg>
     ),
-    Tools: () => (
+    "AI Models & APIs": () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></svg>
+    ),
+    "AI Development Tools": () => (
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>
+    ),
+    "Tools": () => (
       <svg viewBox="0 0 24 24" className="w-full h-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
     )
   };
@@ -891,6 +996,7 @@ const Skills = () => {
   const duplicatedSkills = [...skillsData, ...skillsData];
 
   useEffect(() => {
+    isPausedRef.current = isPaused;
     targetVelocityRef.current = isPaused ? 0 : 0.6;
   }, [isPaused]);
 
@@ -904,7 +1010,7 @@ const Skills = () => {
         // Smoothly interpolate velocity
         velocityRef.current += (targetVelocityRef.current - velocityRef.current) * 0.08 * dt;
 
-        if (Math.abs(velocityRef.current) > 0.01) {
+        if (!isPausedRef.current && Math.abs(velocityRef.current) > 0.01) {
           scrollPosRef.current += velocityRef.current * dt;
           scrollRef.current.scrollLeft = scrollPosRef.current;
         }
@@ -913,10 +1019,14 @@ const Skills = () => {
         const halfWidth = scrollRef.current.scrollWidth / 2;
         if (scrollPosRef.current >= halfWidth) {
           scrollPosRef.current -= halfWidth;
-          scrollRef.current.scrollLeft = scrollPosRef.current;
+          if (!isPausedRef.current) {
+            scrollRef.current.scrollLeft = scrollPosRef.current;
+          }
         } else if (scrollPosRef.current <= 0 && velocityRef.current < 0) {
           scrollPosRef.current += halfWidth;
-          scrollRef.current.scrollLeft = scrollPosRef.current;
+          if (!isPausedRef.current) {
+            scrollRef.current.scrollLeft = scrollPosRef.current;
+          }
         }
       }
 
@@ -925,13 +1035,25 @@ const Skills = () => {
     };
 
     animationId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationId);
+    return () => {
+      cancelAnimationFrame(animationId);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
   }, []);
 
-  // Update precision tracker during manual scroll
+  // Update precision tracker during manual scroll and pause auto-scrolling
   const handleManualScroll = () => {
-    if (isPaused && scrollRef.current) {
+    if (scrollRef.current) {
       scrollPosRef.current = scrollRef.current.scrollLeft;
+      
+      // Pause automatic scroll during manual swipes
+      setIsPaused(true);
+      
+      // Resume auto-scroll after 2 seconds of inactivity
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsPaused(false);
+      }, 2000);
     }
   };
 

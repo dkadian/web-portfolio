@@ -25,6 +25,31 @@ const Navigation = () => {
     restDelta: 0.001
   });
 
+  const animateScroll = (targetPosition: number, duration: number = 850) => {
+    const startPosition = window.scrollY;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const easeInOutCubic = (t: number) => {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+      
+      window.scrollTo(0, startPosition + distance * ease);
+      
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
+
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const sectionId = href.substring(1);
@@ -32,44 +57,49 @@ const Navigation = () => {
     if (element) {
       setIsMobileMenuOpen(false);
       
-      // Perform scroll with a small delay to ensure menu closing transition doesn't interfere
-      setTimeout(() => {
-        const offset = 80; // Adjusted for fixed navbar
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = element.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }, 100);
+      const offset = 80; // Adjusted for fixed navbar
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+      
+      animateScroll(offsetPosition, 900);
     }
   };
 
   useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    links.forEach(link => {
+      const sectionId = link.href.substring(1);
+      const element = document.getElementById(sectionId);
+      if (element) observer.observe(element);
+    });
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-
-      const sections = links.map(link => link.href.substring(1));
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          // Adjust for fixed header height
-          return rect.top <= 150 && rect.bottom >= 150;
-        }
-        return false;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {

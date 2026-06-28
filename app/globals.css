@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-  scroll-behavior: smooth;
+  /* Disabled smooth scroll for instant transitions */
 }
 
 :root {
