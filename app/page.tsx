@@ -7,18 +7,15 @@ import Image from "next/image";
 // --- Components ---
 
 const Magnetic = ({ children, strength = 0.5 }: { children: React.ReactElement; strength?: number }) => {
-  const [isTouch, setIsTouch] = useState(false);
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(hover: none) and (pointer: coarse)").matches);
-  }, []);
-
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const x = useSpring(mouseX, { stiffness: 150, damping: 20, mass: 0.1 });
   const y = useSpring(mouseY, { stiffness: 150, damping: 20, mass: 0.1 });
 
   function handleMouseMove(e: React.MouseEvent) {
-    if (isTouch) return;
+    // Skip heavy math on touch devices seamlessly
+    if (typeof window !== "undefined" && window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
+    
     const { clientX, clientY, currentTarget } = e;
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
     const centerX = left + width / 2;
@@ -28,18 +25,15 @@ const Magnetic = ({ children, strength = 0.5 }: { children: React.ReactElement; 
   }
 
   function handleMouseLeave() {
-    if (isTouch) return;
     mouseX.set(0);
     mouseY.set(0);
   }
-
-  if (isTouch) return children;
 
   return (
     <motion.div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x, y, willChange: "transform" }}
+      style={{ x, y }}
     >
       {children}
     </motion.div>
@@ -70,7 +64,7 @@ const TiltCard = ({ children, className = "" }: { children: React.ReactNode; cla
     <motion.div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d", willChange: "transform" }}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       className={className}
     >
       <div style={{ transform: "translateZ(30px)", backfaceVisibility: "hidden" }}>
@@ -377,8 +371,47 @@ const completedSGPAs = [
   { semester: "Semester 08", sgpa: null }
 ];
 
+
 const validSGPAs = completedSGPAs.filter(s => typeof s.sgpa === 'number' && s.sgpa !== null);
 const cgpa = (validSGPAs.reduce((acc, curr) => acc + (curr.sgpa as number), 0) / validSGPAs.length).toFixed(2);
+
+const experienceData = [
+  {
+    role: "AI for Sustainability Virtual Internship",
+    company: "1M1B",
+    location: "Remote",
+    duration: "July 2026 – Present",
+    description: "Designed and prototyped AI-powered sustainability solutions, applying IBM Granite models and RAG frameworks to address climate action and waste reduction. Explored agentic AI systems for clean energy initiatives, gaining hands-on experience with cutting-edge AI/ML concepts under expert mentorship from IBM Labs professionals."
+  },
+  {
+    role: "Financial Analyst Intern",
+    company: "Edify Equity",
+    location: "Remote",
+    duration: "June 2026 – July 2026",
+    description: "Conducted comprehensive market research, analyzing company fundamentals and macroeconomic indicators to identify key stock market trends. Generated weekly reports summarizing notable stock performance and critical financial news, contributing to 10+ internal review presentations for senior leadership."
+  }
+];
+
+const certificationsData = [
+  {
+    title: "Agentic AI Certified Foundations Associate",
+    issuer: "Oracle",
+    date: "September 2026",
+    image: "/certificates/oracle.jpg"
+  },
+  {
+    title: "AI Literacy",
+    issuer: "IBM",
+    date: "July 2026",
+    image: "/certificates/ailiteracy.jpg"
+  },
+  {
+    title: "Complete Data Science, Machine Learning, DL, NLP Bootcamp",
+    issuer: "Udemy",
+    date: "April 2026",
+    image: "/certificates/udemy.jpg"
+  }
+];
 
 // --- Sections ---
 
@@ -439,6 +472,8 @@ const Hero = () => {
                           src="/Unknown.jpg"
                           alt="Unknown Identity"
                           fill
+                          priority
+                          quality={60}
                           sizes="(max-width: 768px) 224px, 288px"
                           className="object-cover scale-110"
                         />
@@ -449,7 +484,7 @@ const Hero = () => {
                   {/* Back Side: profile.jpeg */}
                   <motion.div
                     className="absolute inset-0"
-                    style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                    style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                     animate={{ opacity: isFlipped ? 1 : 0 }}
                     transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
                   >
@@ -459,6 +494,8 @@ const Hero = () => {
                           src="/profile.jpeg"
                           alt="Deepak Kadian"
                           fill
+                          priority
+                          quality={60}
                           sizes="(max-width: 768px) 224px, 288px"
                           className="object-cover"
                         />
@@ -585,7 +622,6 @@ const ImageSlider = ({ images, title, isFlipped }: { images: string[]; title: st
               fill
               sizes="(max-width: 768px) 100vw, 800px"
               className="object-contain"
-              priority={index === 0}
             />
           </div>
         </motion.div>
@@ -1073,7 +1109,7 @@ const Skills = () => {
         onTouchStart={() => setIsPaused(true)}
         onTouchEnd={() => setIsPaused(false)}
       >        <div className="flex gap-4 md:gap-8 w-max px-8 py-4">
-          {[...duplicatedSkills, ...duplicatedSkills].map((group, groupIndex) => {
+          {duplicatedSkills.map((group, groupIndex) => {
             const CategoryIcon = categoryIcons[group.category as keyof typeof categoryIcons] || (() => null);
             return (
               <div key={`${group.category}-${groupIndex}`} className="w-[240px] md:w-[320px] flex-shrink-0">
@@ -1233,13 +1269,138 @@ const Contact = () => {
   );
 };
 
+const Experience = () => (
+  <section id="experience" className="py-24 md:py-48 scroll-mt-20">
+    <SectionHeader title="Experience" description="Professional internships and industry engagements." />
+    <div className="space-y-8 md:space-y-12">
+      {experienceData.map((exp, index) => (
+        <Reveal key={index} delay={index * 0.1}>
+          <TiltCard>
+            <div className="glass-card p-6 md:p-12 shadow-2xl flex flex-col md:flex-row gap-6 md:gap-12 hover:border-sky-500/30 transition-colors duration-700">
+              <div className="md:w-1/3 flex flex-col gap-2 border-b md:border-b-0 md:border-r border-white/5 pb-6 md:pb-0 md:pr-6">
+                <div className="text-[8px] md:text-[10px] font-bold text-sky-500/80 uppercase tracking-widest">{exp.duration}</div>
+                <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-tight">{exp.company}</h3>
+                <div className="text-zinc-500 text-xs md:text-sm font-light uppercase tracking-wide">{exp.location}</div>
+              </div>
+              <div className="md:w-2/3 flex flex-col gap-4">
+                <h4 className="text-lg md:text-xl font-bold text-white tracking-tight">{exp.role}</h4>
+                <p className="text-zinc-400 text-sm md:text-base font-light leading-relaxed">{exp.description}</p>
+              </div>
+            </div>
+          </TiltCard>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+);
+
+const CertificationCard = ({ cert, index }: { cert: { title: string, issuer: string, date: string, image: string }; index: number }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("button")) return;
+    setIsFlipped(!isFlipped);
+  };
+
+  return (
+    <Reveal delay={index * 0.1}>
+      <div className="h-[400px] w-full cursor-pointer group/cert p-2" onClick={handleClick}>
+        <div className="relative w-full h-full perspective-1000">
+          <motion.div
+            className="relative w-full h-full"
+            initial={false}
+            animate={{ rotateY: isFlipped ? 180 : 0 }}
+            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {/* Front Side */}
+            <motion.div
+              className="absolute inset-0 w-full h-full"
+              style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+              animate={{ opacity: isFlipped ? 0 : 1 }}
+              transition={{ duration: 0.4, delay: isFlipped ? 0 : 0.2 }}
+            >
+              <div className="glass-card p-6 md:p-8 h-full flex flex-col gap-6 shadow-2xl hover:border-sky-500/30 transition-colors bg-zinc-950">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-sky-500/10 flex items-center justify-center border border-sky-500/20">
+                    <span className="text-lg md:text-xl">🏆</span>
+                  </div>
+                  <span className="text-[10px] font-bold text-sky-500/50 uppercase tracking-widest">{cert.date}</span>
+                </div>
+                <div className="space-y-4 flex-1 mt-4">
+                  <h3 className="text-lg font-bold text-white leading-snug tracking-tight">{cert.title}</h3>
+                  <div className="text-zinc-500 text-sm font-light uppercase tracking-widest">{cert.issuer}</div>
+                </div>
+                <div className="text-[10px] font-bold text-white/50 uppercase tracking-widest border-t border-white/5 pt-4 mt-auto text-center group-hover/cert:text-sky-400 transition-colors">
+                  Click to view certificate
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Back Side */}
+            <motion.div
+              className="absolute inset-0 w-full h-full"
+              style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+              animate={{ opacity: isFlipped ? 1 : 0 }}
+              transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
+            >
+              <div className="glass-card h-full shadow-2xl relative overflow-hidden bg-zinc-950 border border-sky-500/20">
+                <div className="relative z-10 h-full flex flex-col p-4 md:p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-xs font-bold text-white uppercase tracking-tighter">Certificate View</h3>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setIsFlipped(false); }}
+                      className="text-zinc-500 hover:text-white transition-colors p-2 text-xs"
+                    >
+                      Close ×
+                    </button>
+                  </div>
+                  <div className="relative flex-1 w-full h-full rounded-lg overflow-hidden bg-zinc-900/50">
+                    <Image
+                      src={cert.image}
+                      alt={`${cert.title} Certificate`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+    </Reveal>
+  );
+};
+
+const Certifications = () => (
+  <section id="certifications" className="py-24 md:py-48 scroll-mt-20">
+    <SectionHeader title="Certifications" description="Professional credentials and specialized training." />
+    
+    <Reveal delay={0.6} y={10} className="-mt-12 mb-16">
+      <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-sky-500/5 border border-sky-500/10 text-[10px] font-bold text-sky-500 tracking-[0.2em] uppercase">
+        <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
+        Interactive: Click any card to reveal certificate
+      </div>
+    </Reveal>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      {certificationsData.map((cert, index) => (
+        <CertificationCard key={index} cert={cert} index={index} />
+      ))}
+    </div>
+  </section>
+);
+
 export default function HomePage() {
   return (
     <div className="space-y-0 selection:bg-sky-500/30">
       <Hero />
       <GitHubHub />
+      <Experience />
       <Projects />
       <Skills />
+      <Certifications />
       <Education />
       <CV />
       <Contact />

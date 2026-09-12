@@ -53,13 +53,14 @@ const ParticleBackground = () => {
     const init = () => {
       stars = [];
       // Reduce star density for better performance
-      const count = Math.floor((window.innerWidth * window.innerHeight) / 6000);
+      const count = Math.floor((window.innerWidth * window.innerHeight) / 12000);
       for (let i = 0; i < count; i++) {
         stars.push(new Star());
       }
     };
 
     const animate = () => {
+      if (!ctx || stars.length === 0) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       stars.forEach((s) => {
         s.update();
@@ -68,18 +69,24 @@ const ParticleBackground = () => {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       resizeCanvas();
-      init();
-    });
+      if (window.innerWidth >= 768) {
+        init();
+        if (stars.length > 0) animate();
+      } else {
+        stars = [];
+        ctx?.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
     
-    resizeCanvas();
-    init();
-    animate();
+    handleResize();
 
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
