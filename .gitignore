@@ -43,3 +43,11 @@ yarn-error.log*
 next-env.d.ts
 
 
+
+# local scripts & backups
+*.py
+.eslintrc.json
+babel.json
+
+# raw unoptimized assets
+app/Pictures\ and\ Certificates/
