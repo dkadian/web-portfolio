@@ -1,137 +1,99 @@
-# Deepak Kadian - Portfolio Website
+# Deepak Kadian - Advanced Portfolio Architecture
 
-A modern, high-performance portfolio website built with Next.js 15, React 19, and Tailwind CSS. This portfolio showcases my skills, projects, and education in a sleek, immersive dark-themed interface.
+![Next.js](https://img.shields.io/badge/Next.js_15-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-## 🚀 Features
+A high-performance, immersive portfolio website built with the latest **Next.js 15 (App Router)** and **React 19**. Designed with a minimalist, hacker-inspired "Dark Mode" aesthetic, this architecture showcases my engineering capabilities, projects, and academic background through highly interactive, Framer Motion-powered interfaces.
 
-- **Modern Tech Stack**: Built with Next.js 15 (App Router), React 19, TypeScript, and Tailwind CSS.
-- **Immersive Visuals**: Features a custom particle background and magnetic cursor effects for an engaging user experience.
-- **Animated UI**: Smooth, spring-based animations and layout transitions using Framer Motion 12.
-- **Responsive Design**: Optimized for all screen sizes, from mobile to desktop.
-- **Single Page Architecture**: Seamless navigation between Home, Projects, Skills, Education, and CV sections.
-- **GitHub Integration**: API route for fetching live repository data.
+**🔗 Live Site**: [*(Add your deployment link here, e.g., deepakkadian.com)*](#)
 
-## 🛠️ Tech Stack
+---
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (using Turbopack)
+## 🚀 Key Features
+
+- **Component-Driven Architecture**: The monolithic structure was successfully refactored into modular, maintainable UI components (`app/components/sections/`).
+- **Interactive Framer Motion UI**: Features custom `TiltCard` components, `Magnetic` hover buttons, and a smooth `ParticleBackground` for an immersive user experience.
+- **Secure Custom Backend**: Uses a custom Next.js API route (`/api/contact`) integrated with **Nodemailer** to securely transmit messages directly to my primary email using Google App Passwords.
+- **Dynamic Skill Trees**: An infinite-scrolling expertise tracker mapping out core competencies across Web Development, Data Science, and Machine Learning.
+- **GitHub Integration**: Direct API connections for live repository data tracking and presentation.
+
+## 🛠️ Technology Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (Turbopack)
 - **Library**: [React 19](https://react.dev/)
-- **Language**: [TypeScript 5](https://www.typescriptlang.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS 3.4](https://tailwindcss.com/)
 - **Animations**: [Framer Motion 12](https://www.framer.com/motion/)
-- **Fonts**: Next.js Google Fonts (Plus Jakarta Sans, Mr De Haviland)
+- **Backend Email**: [Nodemailer](https://nodemailer.com/)
 
-## 📁 Project Structure
+---
 
-```
+## 📁 System Architecture
+
+```text
 web-portfolio/
 ├── app/
-│   ├── api/github/         # GitHub API integration route
-│   ├── components/         # Reusable UI components
-│   │   ├── CustomCursor.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Navigation.tsx
+│   ├── api/
+│   │   ├── contact/           # Nodemailer secure POST route
+│   │   └── github/            # GitHub API integration route
+│   ├── components/            
+│   │   ├── sections/          # Modularized page sections (Hero, Projects, Experience, etc.)
+│   │   ├── ui/                # Shared interactive components (Magnetic, TiltCard, Reveal)
+│   │   ├── Navigation.tsx     # Animated glassmorphism top nav & mobile drawer
 │   │   └── ParticleBackground.tsx
-│   ├── Pictures and Certificates/ # Static local assets
-│   ├── globals.css        # Global styles and Tailwind imports
-│   ├── layout.tsx         # Root layout with global providers
-│   ├── page.tsx           # Main single-page entry with all sections
-│   ├── template.tsx       # Page transition template
-│   └── types.d.ts         # Global type definitions
-├── public/                # Publicly accessible static assets
-│   ├── profile.jpeg       # Profile photo
-│   ├── Resume.pdf         # Downloadable resume
-│   └── signature.png      # Custom signature asset
-├── eslint.config.mjs      # ESLint configuration
-├── next.config.ts         # Next.js configuration
-├── package.json           # Dependencies and scripts
-├── tailwind.config.ts     # Tailwind CSS configuration
-└── tsconfig.json          # TypeScript configuration
+│   ├── data/                  # Centralized data structures for projects/skills
+│   ├── globals.css            # Global theme variables & Tailwind injections
+│   ├── layout.tsx             # Root layout & font definitions
+│   └── page.tsx               # Primary assembly point
+├── public/                    # Static assets (Resume, Signature, Images)
+└── tailwind.config.ts         # Tailwind system configurations
 ```
 
-## 👨‍💻 About Me
+## 👨‍💻 About The Developer
 
-I am **Deepak Kadian**, a B.Tech CS Student and AI-ML Engineer based in **Gurugram, IN**. I am passionate about building clean, performant, and user-centric applications.
-
-- **Current Roles**: B.Tech CS Student, Data Analyst, ML Engineer, Python Developer.
-- **Education**: B.Tech Computer Science (Current CGPA: 8.32).
-
-## 💻 Skills & Proficiency
-
-### Frontend
-- **React**: 90%
-- **Tailwind CSS**: 95%
-- **HTML/CSS**: 90%
-
-### Backend
-- **Express.js**: 75%
-- **Python**: 85%
-- **Java**: 70%
-
-### Data Science & ML
-- **Pandas**: 85%
-- **NumPy**: 80%
-- **Scikit-learn**: 80%
-
-### Tools & Databases
-- **Git**: 85%
-- **MongoDB**: 70%
-- **Docker**: 60%
-
-## 📂 Featured Projects
-
-- **Web Portfolio**: A modern, responsive portfolio built with Next.js 15 and React 19.
-- **Dogs vs Cats Recognition**: SVM classifier implemented in Python with 94% accuracy.
-- **House Pricing Prediction**: Linear regression models built with Python and Pandas.
-- **Hand Gesture Recognition**: Real-time deep learning model using Python and OpenCV.
-
-## 📚 Academic Performance
-
-| Semester | SGPA |
-| :--- | :--- |
-| Semester 01 | 8.286 |
-| Semester 02 | 7.500 |
-| Semester 03 | 8.900 |
-| Semester 04 | 8.526 |
-| Semester 05 | 8.391 |
-| **Total CGPA** | **8.32** |
-
-## 📫 Contact
+**Deepak Kadian** | *B.Tech CS Student & AI-ML Engineer* based in Gurugram, IN.
+I specialize in building clean, performant, and user-centric applications bridging the gap between Full-Stack Web Development and Data Science.
 
 - **Email**: [deepakkadian581@gmail.com](mailto:deepakkadian581@gmail.com)
 - **LinkedIn**: [Deepak Kadian](https://www.linkedin.com/in/deepak-5a1749238/)
 - **GitHub**: [@dkadian](https://github.com/dkadian)
 
-## 🚀 Getting Started
+---
 
-### Prerequisites
+## ⚙️ Local Deployment
 
-- Node.js 18.0.0 or higher
-- npm
+To run this architecture locally on your machine:
 
-### Installation
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/dkadian/web-portfolio.git
+   cd web-portfolio
+   ```
 
-1. Clone the repository:
-```bash
-git clone https://github.com/dkadian/web-portfolio.git
-cd web-portfolio
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+3. **Configure Environment Variables:**
+   Create a `.env.local` file in the root directory for the Contact form to function:
+   ```env
+   EMAIL_USER=your_gmail@gmail.com
+   EMAIL_PASS=your_google_app_password
+   ```
 
-3. Run the development server:
-```bash
-npm run dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. **Initialize Turbopack Dev Server:**
+   ```bash
+   npm run dev
+   ```
+   *Navigate to [http://localhost:3000](http://localhost:3000) to view the application.*
 
 ## 📝 License
 
 This project is private and for personal use.
 
 ---
-
-Built with ❤️ by Deepak Kadian
+*Built with logic, precision, and Next.js by Deepak Kadian // 2026*
